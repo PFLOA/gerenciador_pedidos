@@ -4,4 +4,6 @@ export default class EndPoints {
      * Endpoint => 'Login'
      */
     public static Login = 'Login'
+
+    public static GetClientes = 'Cliente'
 }

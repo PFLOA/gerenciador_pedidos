@@ -1,15 +1,17 @@
 import { useEffect, useRef, useCallback, useState } from "react"
-import { realizarLogin } from "../../services/login.service";
 import { useHistory } from "react-router-dom";
-import { isAuthenticated, login } from "../../services/auth";
 import { Button, Image } from 'react-bootstrap'
 import { FormHandles, SubmitHandler } from '@unform/core'
 import { Form } from '@unform/web'
 
-import logo from '../../assets/LOGO.png'
+import { isAuthenticated, login } from "../../services/auth";
+import { realizarLogin } from "../../services/login.service";
 import Input from "../../components/Form/input";
+import styles from './style.module.scss'
+import logo from '../../assets/img/logo.png'
 
 const LoginForm = () => {
+
     const [usuario, setUsuario] = useState({
         userName: '',
         senha: ''
@@ -42,7 +44,7 @@ const LoginForm = () => {
         } catch (error) {
 
         }
-    }, [usuario])
+    }, [usuario, history])
 
     useEffect(() => {
         if (isAuthenticated())
@@ -51,18 +53,18 @@ const LoginForm = () => {
 
     return (
         <>
-            <div className="conteudo">
-                <Image src={logo} height={200} width={500} />
-                <Form className="my-2" onSubmit={handleLogin} ref={formRef}>
-                    <div className="d-flex flex-column login-form">
-                        <h2 className="my-5">Login</h2>
-                        <div className="form-group">
+            <div className={`${styles.conteudo}`}>
+                <Image src={logo} height={100} width={300} />
+                <Form className={`my-2`} onSubmit={handleLogin} ref={formRef}>
+                    <div className={`${styles.login_form}`}>
+                        <h2 className={`my-5`}>Login</h2>
+                        <div className={`form-group`}>
                             <Input label="Usuário" type="text" name="userName" placeholder="Digite o usuario" />
                         </div>
-                        <div className="form-group">
+                        <div className={`form-group`}>
                             <Input label="Senha" type="password" name="senha" placeholder="Senha" />
                         </div>
-                        <Button variant="primary" className="my-5" type="submit">
+                        <Button className={`${styles.submit_button}`} type="submit">
                             Entrar
                         </Button>
                     </div>

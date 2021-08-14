@@ -1,0 +1,7 @@
+@import '../../styles/variaveis';
+.navbar-menu {
+    height: 40px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: $corBgColorPrincipal;
+}

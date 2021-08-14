@@ -6,8 +6,7 @@ import React, {
     useRef,
 } from 'react';
 import { useField } from '@unform/core';
-import { FiAlertCircle } from 'react-icons/fi';
-import { Container } from './styles';
+import { Fragment } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     mask?: string
@@ -99,7 +98,7 @@ const Input: React.FC<InputProps> = ({ label, name, mask = '', ...rest }) => {
     );
 
     return (
-        <Container className="form-floating mb-3 mx-0">
+        <Fragment>
             <input
                 className={`form-control ${error && 'is-invalid'}`}
                 maxLength={maxLength}
@@ -113,7 +112,7 @@ const Input: React.FC<InputProps> = ({ label, name, mask = '', ...rest }) => {
                 {...rest}
             />
             <label htmlFor={label}> {label} </label>
-        </Container>
+        </Fragment>
     );
 };
 
