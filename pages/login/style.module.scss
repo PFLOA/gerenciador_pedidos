@@ -1,0 +1,22 @@
+@import '../../styles/importer';
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+        margin-bottom: 2rem;
+        color: $corTexto;
+    }
+    .btn_login {
+        @include pxy(1.5, 30);
+        margin-top: 1rem;
+        color: $corTexto;
+        border-radius: 10px;
+        border: 1px solid rgba($color: $corPreta, $alpha: 0.3);
+        background-image: linear-gradient(to bottom right, $corAzulPrimarioButtonLogin, $corAzulSecundarioButtonLogin);
+        &:hover {
+            color: $corTexto;
+            background-image: linear-gradient($corAzulPrimarioButtonLogin, $corAzulSecundarioButtonLogin, $corAzulPrimarioButtonLogin);
+        }
+    }
+}

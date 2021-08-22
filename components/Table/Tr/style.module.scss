@@ -1,0 +1,15 @@
+@import '../../../styles/importer';
+$corRowImpar: #e9faff;
+.par {
+    background-color: $corTexto;
+}
+
+.impar {
+    background-color: $corRowImpar;
+}
+
+.tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}

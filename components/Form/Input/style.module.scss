@@ -1,0 +1,49 @@
+@import "../../../styles/importer.scss";
+$corInputBorder: $corAzulSecundario;
+$corlabel: #747476;
+.styled_input {
+    background: $corBranco !important;
+    border: 1px solid $corInputBorder !important;
+    border-radius: 8px !important;
+    height: 38px;
+    padding: 10px;
+    @media screen and (max-width: 380px) {
+        font-size: 13px;
+    }
+}
+
+.styled_label {
+    p {
+        margin: 0;
+        font-size: 16px;
+        color: $corlabel;
+    }
+}
+
+.opcional {
+    color: $corlabel;
+}
+
+.input_h {
+    height: 95px;
+}
+
+.styled_input_error {
+    border: 1px solid $corError !important;
+}
+
+.styled_label_error {
+    color: $corError !important;
+}
+
+.img_validation {
+    display: flex;
+    position: relative;
+    left: -1.6rem;
+}
+
+.error_p {
+    font-size: 12px !important;
+    line-height: 15px !important;
+    color: $corError !important;
+}

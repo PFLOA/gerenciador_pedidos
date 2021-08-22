@@ -1,0 +1,14 @@
+@import '../../styles/importer';
+.loader {
+    animation: loading 2s linear infinite;
+    border: 6px solid $corBgScrollbar;
+    border-top-color: $corAzulPrimarioButtonLogin;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    @keyframes loading {
+        to {
+            transform: rotate(1turn);
+        }
+    }
+}

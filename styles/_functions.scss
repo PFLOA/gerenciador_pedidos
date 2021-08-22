@@ -1,0 +1,31 @@
+@import './variaveis';
+@mixin p($val) {
+    padding: ($val * $spacer);
+}
+
+@mixin pxy($valy, $valx) {
+    padding: ($valy * $spacer) ($valx * $spacer);
+}
+
+@mixin px($valx) {
+    padding: 0 ($valx * $spacer);
+}
+
+@mixin py($valy) {
+    padding: ($valy * $spacer) 0;
+}
+
+@mixin pt($val) {
+    padding-top: ($val * $spacer);
+}
+
+@mixin pb($val) {
+    padding-bottom: ($val * $spacer);
+}
+
+@mixin fontSize($pixels) {
+    font-size: ($pixels/$bodyFont)*1rem;
+    @media (max-width: 450px) {
+        font-size: ($pixels/$bodyFontMobile)*1rem;
+    }
+}

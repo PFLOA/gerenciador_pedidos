@@ -1,0 +1,31 @@
+@import '../../styles/importer';
+$corCardDegrade0: #FE9568;
+$corCardDegrade1: #FEA781;
+$corCardDegrade2: #FEB696;
+.card {
+    margin-right: 0.5rem;
+    width: 17rem;
+    height: 9rem;
+    border-radius: 10px;
+    background-image: linear-gradient(90deg, rgba($corCardDegrade0, 1) 40%, $corCardDegrade1 70%, $corCardDegrade2 100%);
+    .card_body {
+        padding: 20px;
+        height: 70%;
+        border-bottom: 1px solid $corTexto;
+        h1 {
+            color: $corTexto;
+            font-weight: 500;
+            line-height: 29px;
+            @include fontSize(24);
+        }
+        p {
+            color: $corTexto;
+        }
+    }
+    .card_footer {
+        padding: 10px;
+        p {
+            color: $corTexto;
+        }
+    }
+}
