@@ -3,7 +3,7 @@ import FormButton from '../FormButton';
 import styles from './style.module.scss';
 
 interface FormFilter {
-	onSubmit(): void;
+	onSubmit(e: any): void;
 	link?: string;
 }
 const FormFilter: React.FC<FormFilter> = ({ link, onSubmit, children }) => {

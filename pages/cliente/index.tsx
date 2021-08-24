@@ -11,36 +11,67 @@ import styles from './style.module.scss';
 import { useState } from 'react';
 import { BuscarClientesFiltroResponse } from '../../service/models/cliente/cliente.model';
 import { useEffect } from 'react';
-import { buscarClientesPorFiltro } from '../../service/cliente.service';
+// import { buscarClientesPorFiltro } from '../../service/cliente.service';
 import Loader from '../../components/Loader';
 import moment from 'moment';
+
+const clientes: BuscarClientesFiltroResponse = {
+	data: [
+		{
+			nomeCliente: 'Organização organizada dos organizadores',
+			guid: 'ec7dd36a-9581-4ba0-8f8b-b60498de7f0b'
+		},
+		{
+			nomeCliente: 'Organização organizada dos organizadores',
+			guid: 'ec7dd36a-9581-4ba0-8f8b-b60498de7f0b'
+		},
+		{
+			nomeCliente: 'Organização organizada dos organizadores',
+			guid: 'ec7dd36a-9581-4ba0-8f8b-b60498de7f0b'
+		},
+		{
+			nomeCliente: 'Organização organizada dos organizadores',
+			guid: 'ec7dd36a-9581-4ba0-8f8b-b60498de7f0b'
+		},
+		{
+			nomeCliente: 'Organização organizada dos organizadores',
+			guid: 'ec7dd36a-9581-4ba0-8f8b-b60498de7f0b'
+		},
+		{
+			nomeCliente: 'Organização organizada dos organizadores',
+			guid: 'ec7dd36a-9581-4ba0-8f8b-b60498de7f0b'
+		},
+	], count: 6,
+	page: 1,
+	pages: 1,
+	totalCount: 6
+}
 
 const Cliente = () => {
 	const [clienteLista, setClienteLista] =
 		useState<BuscarClientesFiltroResponse>();
 	const handleSubmit = useCallback((e: any) => {
 		e.preventDefault();
-		buscarClientesPorFiltro({
-			CountTotal: true,
-			Page: 1,
-			itemsPerPage: 10,
-			nomeCliente: 'ze',
-		}).then((result) => {
-			console.log(result);
-			setClienteLista(result);
-		});
+		// buscarClientesPorFiltro({
+		// 	CountTotal: true,
+		// 	Page: 1,
+		// 	itemsPerPage: 10,
+		// 	nomeCliente: 'ze',
+		// }).then((result) => {
+		// 	console.log(result);
+		// 	setClienteLista(result);
+		// });
 	}, []);
 
-	console.log(new Date().toISOString());
 	useEffect(() => {
-		buscarClientesPorFiltro({
-			CountTotal: true,
-			Page: 1,
-			itemsPerPage: 10,
-		}).then((result) => {
-			console.log(result);
-			setClienteLista(result);
-		});
+		// buscarClientesPorFiltro({
+		// 	CountTotal: true,
+		// 	Page: 1,
+		// 	itemsPerPage: 10,
+		// }).then((result) => {
+		// 	console.log(result);
+		// 	setClienteLista(result);
+		// });
 	}, []);
 
 	return (
@@ -54,7 +85,7 @@ const Cliente = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Layout active={'cliente'}>
-				{clienteLista ? (
+				{clientes ? (
 					<>
 						<div className={`mb-4 py-2 ${styles.titulo}`}>
 							<h2>Clientes</h2>
@@ -80,7 +111,7 @@ const Cliente = () => {
 								</div>
 							</div>
 						</FormFilter>
-						<TableCliente data={clienteLista} />
+						<TableCliente data={clientes} />
 					</>
 				) : (
 					<div className={styles.loader}>
