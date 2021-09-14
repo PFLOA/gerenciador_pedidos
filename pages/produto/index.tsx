@@ -2,29 +2,29 @@ import { useCallback, useRef } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Head from 'next/head';
-import moment from 'moment';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
 
 import FormFilter from '../../components/Form/FormFilter';
 
 import Input from '../../components/Form/Input';
 import Layout from '../../components/Layout';
-import TableCliente from '../../components/TableCliente';
+import TableProduto from '../../components/TableProduto';
 
-import { BuscarClientesFiltroResponse } from '../../service/models/cliente/cliente.model';
-import { buscarClientesPorFiltro } from '../../service/cliente.service';
 import Loader from '../../components/Loader';
 
 import styles from './style.module.scss';
-import { handleEventChange } from '../../utils/handleChanges';
+import { handleEventChange, handleMask } from '../../utils/handleChanges';
+import { buscarProdutosPorFiltro } from '../../service/produto.service';
+import { BuscarProdutosFiltroResponse } from '../../service/models/produto/produto.model';
+import { PropriedadesFormularios } from '../../utils/propriedadesFormulario';
 
-interface ClienteProps {
-	clienteListaResult: BuscarClientesFiltroResponse;
+interface ProdutoProps {
+	produtoListaResult: BuscarProdutosFiltroResponse;
 }
 
-const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
+const Produto: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 	//#region [ UseState ]
+
 	const [isLoading, setIsLoading] = useState(false);
 	const [filtro, setFiltro] = useState({
 		CountTotal: true,
@@ -33,8 +33,8 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 		dataCadastro: undefined,
 		nomeCliente: '',
 	});
-	const [clienteLista, setClienteLista] =
-		useState<BuscarClientesFiltroResponse>();
+	const [produtoLista, setProdutoLista] =
+		useState<BuscarProdutosFiltroResponse>();
 
 	//#endregion
 	//#region [ ref ]
@@ -45,17 +45,17 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 	//#region [ Handles ]
 
 	const handleChange = (e: any) => {
-		const { name, value } = handleEventChange(e, filtro);
+		handleEventChange(e, filtro);
 	};
 	const handleSubmit = useCallback(
 		async (e: any) => {
 			e.preventDefault();
 			setIsLoading(true);
 			try {
-				const result = await buscarClientesPorFiltro({
+				const result = await buscarProdutosPorFiltro({
 					params: filtro,
 				});
-				setClienteLista(result);
+				setProdutoLista(result);
 			} catch (error) {}
 			setIsLoading(false);
 		},
@@ -66,14 +66,14 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 	//#region [ UseEffects ]
 
 	useEffect(() => {
-		buscarClientesPorFiltro({
+		buscarProdutosPorFiltro({
 			params: {
 				CountTotal: true,
 				Page: 1,
 				itemsPerPage: 10,
 			},
 		}).then((result) => {
-			setClienteLista(result);
+			setProdutoLista(result);
 		});
 	}, []);
 
@@ -82,26 +82,34 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 	return (
 		<>
 			<Head>
-				<title>Clientes</title>
+				<title>Produtos</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Layout active={'cliente'}>
-				{clienteLista?.data ? (
+			<Layout active={'produto'}>
+				{produtoLista?.data ? (
 					<>
 						<div className={`mb-4 py-2 ${styles.titulo}`}>
-							<h2>Clientes</h2>
+							<h2>Produtos</h2>
 						</div>
 						<FormFilter
 							onSubmit={handleSubmit}
-							link="cliente/novo"
+							link="produto/novo"
 							formRef={formRef}
 						>
 							<div className="row">
 								<div className="col-3">
 									<Input
 										type="text"
-										name="nomeCliente"
-										label="Nome Cliente"
+										name="nomeProduto"
+										label="Nome Produto"
+										onChange={handleChange}
+									/>
+								</div>
+								<div className="col-3">
+									<Input
+										type="text"
+										name={PropriedadesFormularios.Money}
+										label="Preço"
 										onChange={handleChange}
 									/>
 								</div>
@@ -120,7 +128,7 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 								<Loader />
 							</div>
 						) : (
-							<TableCliente data={clienteLista} />
+							<TableProduto data={produtoLista} />
 						)}
 					</>
 				) : (
@@ -135,7 +143,7 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	try {
-		const clienteListaResult = await buscarClientesPorFiltro({
+		const produtoListaResult = await buscarProdutosPorFiltro({
 			params: {
 				CountTotal: true,
 				Page: 1,
@@ -145,7 +153,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
 		return {
 			props: {
-				clienteListaResult,
+				produtoListaResult,
 			},
 		};
 	} catch (error: any) {
@@ -160,4 +168,4 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	}
 };
 
-export default Cliente;
+export default Produto;

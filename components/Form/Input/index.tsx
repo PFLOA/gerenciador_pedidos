@@ -3,24 +3,11 @@ import styles from './style.module.scss';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	label: string;
-	name: string;
 	error?: string;
 	opcional?: boolean;
 }
 
-const Input: React.FC<InputProps> = ({
-	label,
-	type,
-	value,
-	name,
-	error,
-	opcional,
-	...rest
-}) => {
-	//#region [ UseMemo ]
-
-	//#endregion
-
+const Input: React.FC<InputProps> = ({ label, error, opcional, ...rest }) => {
 	return (
 		<div className={`d-flex flex-column mb-1 mx-0 ${styles.input_h}`}>
 			{label && (
@@ -44,10 +31,6 @@ const Input: React.FC<InputProps> = ({
 					className={`form-control ${styles.styled_input} ${
 						error && styles.styled_input_error
 					}`}
-					value={value}
-					type={type}
-					id={name}
-					name={name}
 					{...rest}
 				/>
 			</div>

@@ -1,9 +1,7 @@
 export default class EndPoints {
-    /**
-     * Realiza Login.
-     * Endpoint => 'Login'
-     */
-    public static Login = 'Login'
-
-    public static GetClientes = 'Cliente'
+	public static Login = 'Login';
+	public static Cliente = 'Cliente';
+	public static GetClientePorGuid = 'Cliente/Guid';
+	public static Produto = 'Produto';
+	public static GetProdutoPorGuid = 'Produto/Guid';
 }

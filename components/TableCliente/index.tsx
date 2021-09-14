@@ -14,11 +14,19 @@ interface TableClienteProps {
 }
 
 const Linhas = (item: ClienteModel, index: number) => {
+	const { guid } = item;
 	return (
 		<Tr index={index} key={index}>
 			<Td>{item.nomeCliente}</Td>
 			<Td>{item.guid}</Td>
-			<TdLink link={`cliente/${item.guid}`}>Detalhes</TdLink>
+			<TdLink
+				link={{
+					pathname: 'cliente/detalhes/',
+					query: { guid: item.guid },
+				}}
+			>
+				Detalhes
+			</TdLink>
 		</Tr>
 	);
 };
