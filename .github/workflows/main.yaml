@@ -19,6 +19,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: gerenciador_pedidos/
           exclude:
-          - '**/.next/**'
-          - '**/.git*/**'
-          - '**/node_modules/**'
+          - /.next/
+          - /.git*/
+          - /node_modules/
