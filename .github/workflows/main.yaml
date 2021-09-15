@@ -19,4 +19,4 @@ jobs:
           local_source_dir: ./
           dist_target_dir:  gerenciador_pedidos/
           delete: "true"
-          exclude: "'^.next/ ' '^README.md'"
+          exclude: "'^.next/' '^.git/' '^build/' '^README.md' '^node_modules/'"
