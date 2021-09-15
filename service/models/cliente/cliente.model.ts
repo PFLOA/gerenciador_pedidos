@@ -1,8 +1,16 @@
-import { BaseFilter } from '../core/baseFilters.model';
+import { BaseFilter } from '../core/core.model';
 
 export interface ClienteModel {
 	guid: string;
 	nomeCliente: string;
+	dataCadastro: Date;
+}
+export interface CriarClienteRequest {
+	nomeCliente: string;
+}
+
+export interface AlterarClienteRequest extends CriarClienteRequest {
+	guid: string;
 }
 export interface BuscarClientesFiltroRequest extends BaseFilter {
 	/// <summary>

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useMemo } from 'react';
-import { IconType } from 'react-icons';
 import { BiGridAlt, BiX } from 'react-icons/bi';
 import { FaHome, FaAddressBook } from 'react-icons/fa';
 interface SidebarProps {
@@ -20,21 +19,19 @@ const Menu = (item: MenuProps, index: number) => {
 	}, [item]);
 
 	return (
-		<>
-			<div
-				className={`menu-item ${linkAtivo && 'menu-item-ativo'}`}
-				key={index}
-			>
-				<Link href={`/${item.to}`} passHref>
-					<button type="button" className="link-btn">
-						<div className="data">
-							<div className="img">{item.img}</div>
-							<p>{item.label}</p>
-						</div>
-					</button>
-				</Link>
-			</div>
-		</>
+		<div
+			className={`menu-item ${linkAtivo && 'menu-item-ativo'}`}
+			key={index}
+		>
+			<Link href={`/${item.to}`} passHref>
+				<button type="button" className="link-btn">
+					<div className="data">
+						<div className="img">{item.img}</div>
+						<p>{item.label}</p>
+					</div>
+				</button>
+			</Link>
+		</div>
 	);
 };
 const Sidebar: React.FC<SidebarProps> = ({ active }) => {
@@ -51,6 +48,20 @@ const Sidebar: React.FC<SidebarProps> = ({ active }) => {
 			img: <FaAddressBook size={16} />,
 			label: 'Clientes',
 			to: 'cliente',
+			active: active,
+		},
+		{
+			id: 3,
+			img: <FaAddressBook size={16} />,
+			label: 'Produtos',
+			to: 'produto',
+			active: active,
+		},
+		{
+			id: 4,
+			img: <FaAddressBook size={16} />,
+			label: 'Pedidos',
+			to: 'pedido',
 			active: active,
 		},
 	];

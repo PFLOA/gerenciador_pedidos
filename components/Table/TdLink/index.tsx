@@ -4,7 +4,7 @@ import Td from '../Td';
 import styles from './style.module.scss';
 
 interface TdLinkProps {
-	link: string;
+	link: any;
 }
 const TdLink: React.FC<TdLinkProps> = ({ link, children }) => {
 	return (

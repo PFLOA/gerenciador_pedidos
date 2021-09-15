@@ -1,14 +1,12 @@
-import FormButton from '../FormButton';
+import FormCadastroButton from '../FormCadastroButton';
 
 import styles from './style.module.scss';
 
 interface FormFilter {
 	onSubmit(e: any): void;
 	formRef: any;
-	link?: string;
 }
-const FormFilter: React.FC<FormFilter> = ({
-	link,
+const FormCadastro: React.FC<FormFilter> = ({
 	onSubmit,
 	formRef,
 	children,
@@ -17,10 +15,10 @@ const FormFilter: React.FC<FormFilter> = ({
 		<form onSubmit={onSubmit} className={styles.form} ref={formRef}>
 			<div className={styles.inputs}>{children}</div>
 			<div className={styles.submit}>
-				<FormButton link={link} />
+				<FormCadastroButton />
 			</div>
 		</form>
 	);
 };
 
-export default FormFilter;
+export default FormCadastro;

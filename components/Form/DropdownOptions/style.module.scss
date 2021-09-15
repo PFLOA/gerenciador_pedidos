@@ -1,0 +1,29 @@
+@import '../../../styles/importer';
+@mixin btn {
+    @include pxy(2, 8);
+    border: 0;
+    width: 160px;
+    color: $corTexto;
+    border-radius: 10px;
+}
+
+.novo {
+    @include btn;
+    p {
+        margin: 0;
+        text-align: center;
+    }
+    background: $corBgModalButton;
+    &:hover {
+        background: $corBgBody;
+    }
+}
+
+.submit {
+    @include btn;
+    margin-left: 20px;
+    background: $corBgColorPrincipal;
+    &:hover {
+        background: $corBgBody;
+    }
+}

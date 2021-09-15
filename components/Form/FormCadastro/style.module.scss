@@ -1,0 +1,9 @@
+.form {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    .submit {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
