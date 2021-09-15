@@ -22,10 +22,3 @@
 @mixin pb($val) {
     padding-bottom: ($val * $spacer);
 }
-
-@mixin fontSize($pixels) {
-    font-size: ($pixels/$bodyFont)*1rem;
-    @media (max-width: 450px) {
-        font-size: ($pixels/$bodyFontMobile)*1rem;
-    }
-}
