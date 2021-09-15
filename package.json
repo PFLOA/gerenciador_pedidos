@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
+        "buildYarn": "yarn build",
         "start": "NODE_ENV=development node server.js",
         "lint": "next lint"
     },

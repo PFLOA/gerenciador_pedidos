@@ -27,11 +27,9 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 	//#region [ UseState ]
 	const [isLoading, setIsLoading] = useState(false);
 	const [filtro, setFiltro] = useState({
-		CountTotal: true,
-		Page: 1,
+		countTotal: true,
+		page: 1,
 		itemsPerPage: 10,
-		dataCadastro: undefined,
-		nomeCliente: '',
 	});
 	const [clienteLista, setClienteLista] =
 		useState<BuscarClientesFiltroResponse>();
@@ -68,8 +66,8 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 	useEffect(() => {
 		buscarClientesPorFiltro({
 			params: {
-				CountTotal: true,
-				Page: 1,
+				countTotal: true,
+				page: 1,
 				itemsPerPage: 10,
 			},
 		}).then((result) => {
@@ -137,8 +135,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	try {
 		const clienteListaResult = await buscarClientesPorFiltro({
 			params: {
-				CountTotal: true,
-				Page: 1,
+				countTotal: true,
+				page: 1,
 				itemsPerPage: 10,
 			},
 		});

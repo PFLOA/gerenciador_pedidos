@@ -27,11 +27,9 @@ const Produto: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [filtro, setFiltro] = useState({
-		CountTotal: true,
-		Page: 1,
+		countTotal: true,
+		page: 1,
 		itemsPerPage: 10,
-		dataCadastro: undefined,
-		nomeCliente: '',
 	});
 	const [produtoLista, setProdutoLista] =
 		useState<BuscarProdutosFiltroResponse>();
@@ -68,8 +66,8 @@ const Produto: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 	useEffect(() => {
 		buscarProdutosPorFiltro({
 			params: {
-				CountTotal: true,
-				Page: 1,
+				countTotal: true,
+				page: 1,
 				itemsPerPage: 10,
 			},
 		}).then((result) => {
@@ -145,8 +143,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 	try {
 		const produtoListaResult = await buscarProdutosPorFiltro({
 			params: {
-				CountTotal: true,
-				Page: 1,
+				countTotal: true,
+				page: 1,
 				itemsPerPage: 10,
 			},
 		});

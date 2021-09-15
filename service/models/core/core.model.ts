@@ -1,7 +1,7 @@
 export interface BaseFilter {
 	itemsPerPage: number;
 	countTotal: boolean;
-	[index: number]: OrdenationAttribute;
+	ordenation?: OrdenationAttribute;
 	page: number;
 }
 
