@@ -1,5 +1,6 @@
 import { ClienteModel } from '../cliente/cliente.model';
 import { BaseFilter, Entity, FilterResponse } from '../core/core.model';
+import { ItemPedidoModel } from '../itemPedido/item-pedido.model';
 import { ProdutoModel } from '../produto/produto.model';
 
 export enum StatusPedido {
@@ -23,12 +24,7 @@ export interface ItensPedidoModel {
 }
 export interface CriarPedidoRequest {
 	statusPedido: StatusPedido;
-	itenPedido: [
-		{
-			idProduto: number;
-			quantidade: number;
-		}
-	];
+	itenPedido: ItemPedidoModel[];
 	clienteGuid: string;
 	nf: string;
 	observacoes: string;

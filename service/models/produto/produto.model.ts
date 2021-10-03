@@ -1,7 +1,6 @@
 import { BaseFilter, Entity, FilterResponse } from '../core/core.model';
 
 export interface ProdutoModel extends Entity {
-	id: number;
 	nomeProduto: string;
 	preco: number;
 }

@@ -13,20 +13,28 @@ import TableProduto from '../../components/TableProduto';
 import Loader from '../../components/Loader';
 
 import styles from './style.module.scss';
-import { handleEventChange, handleMask } from '../../utils/handleChanges';
+
+import { handleEventChange } from '../../utils/handleChanges';
 import { buscarProdutosPorFiltro } from '../../service/produto.service';
 import { BuscarProdutosFiltroResponse } from '../../service/models/produto/produto.model';
 import { PropriedadesFormularios } from '../../utils/propriedadesFormulario';
+import { removerMaskMoney } from '../../utils/utilsMoney';
 
 interface ProdutoProps {
 	produtoListaResult: BuscarProdutosFiltroResponse;
+}
+interface ProdutoFilterState {
+	countTotal: boolean;
+		page: number;
+		itemsPerPage: number;
+		preco?: number;
 }
 
 const Produto: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 	//#region [ UseState ]
 
 	const [isLoading, setIsLoading] = useState(false);
-	const [filtro, setFiltro] = useState({
+	const [filtro, setFiltro] = useState<ProdutoFilterState>({
 		countTotal: true,
 		page: 1,
 		itemsPerPage: 10,
@@ -37,13 +45,16 @@ const Produto: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 	//#endregion
 	//#region [ ref ]
 
-	const formRef = useRef(null);
+	const formRef = useRef<HTMLFormElement>(null);
 
 	//#endregion
 	//#region [ Handles ]
 
 	const handleChange = (e: any) => {
 		handleEventChange(e, filtro);
+		if(filtro.preco){
+			setFiltro({...filtro, preco: removerMaskMoney(filtro.preco)})
+		}
 	};
 	const handleSubmit = useCallback(
 		async (e: any) => {
@@ -76,6 +87,14 @@ const Produto: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 	}, []);
 
 	//#endregion
+	const clearFilter = () => {
+		formRef.current?.reset();
+		setFiltro({
+			countTotal: true,
+			page: 1,
+			itemsPerPage: 10,
+		});
+	}
 
 	return (
 		<>
@@ -90,6 +109,7 @@ const Produto: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 							<h2>Produtos</h2>
 						</div>
 						<FormFilter
+							clearFilter={clearFilter}
 							onSubmit={handleSubmit}
 							link="produto/novo"
 							formRef={formRef}

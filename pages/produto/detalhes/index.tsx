@@ -18,7 +18,7 @@ import {
 	alterarProduto,
 	buscarProdutoPorGuid,
 } from '../../../service/produto.service';
-import { formatMoney } from '../../../utils/utilsMoney';
+import { formatMoney, removerMaskMoney } from '../../../utils/utilsMoney';
 
 const DetalhesProduto: React.FC = () => {
 	//#region [ UseState ]
@@ -81,7 +81,7 @@ const DetalhesProduto: React.FC = () => {
 				const result = await alterarProduto({
 					nomeProduto: produto.nomeProduto,
 					guid: produto.guid,
-					preco: produto.preco,
+					preco: removerMaskMoney(produto.preco),
 				});
 
 				fetch(result.guid);

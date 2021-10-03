@@ -9,7 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<InputProps> = ({ label, error, opcional, ...rest }) => {
 	return (
-		<div className={`d-flex flex-column mb-1 mx-0 ${styles.input_h}`}>
+		<div className={`d-flex flex-column mx-0 ${styles.input_h}`}>
 			{label && (
 				<label htmlFor={label} className="mb-1">
 					<div className="d-flex justify-content-between">

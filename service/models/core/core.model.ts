@@ -14,6 +14,7 @@ export interface FilterResponse<T> {
 }
 
 export interface Entity {
+	id: number;
 	guid: string;
 	dataCadastro: Date;
 }
