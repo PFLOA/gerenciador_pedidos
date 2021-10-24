@@ -1,8 +1,9 @@
+name: 🚀 Deploy website on push
+
 on:
   push:
-    branches:
-      - main
-name: 🚀 Deploy website on push
+    branches: [ main ]
+    
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -10,13 +11,19 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+            node-version: 12
+      - run: npm install -g yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
       - name: 📂 Sync files
         uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
         with:
           ftp_host: ${{ secrets.FTP_SERVER }}
           ftp_username: ${{ secrets.FTP_USER }}
           ftp_password: ${{ secrets.FTP_PASSWORD }}
-          local_source_dir: ./
+          local_source_dir: ./build/
           dist_target_dir:  gerenciador_pedidos/
           delete: "true"
           exclude: "'^.next/' '^.git/' '^README.md' '^node_modules/'"
