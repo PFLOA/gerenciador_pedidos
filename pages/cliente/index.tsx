@@ -59,6 +59,9 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 		},
 		[filtro]
 	);
+	const clearFilter = () => {
+
+	}
 
 	//#endregion
 	//#region [ UseEffects ]
@@ -93,6 +96,7 @@ const Cliente: React.FC<ClienteProps> = ({ clienteListaResult }) => {
 							onSubmit={handleSubmit}
 							link="cliente/novo"
 							formRef={formRef}
+							clearFilter={clearFilter}
 						>
 							<div className="row">
 								<div className="col-3">
