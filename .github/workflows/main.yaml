@@ -16,14 +16,14 @@ jobs:
             node-version: 12
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
-      - run: next build
+      - run: yarn build
       - name: 📂 Sync files
         uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
         with:
           ftp_host: ${{ secrets.FTP_SERVER }}
           ftp_username: ${{ secrets.FTP_USER }}
           ftp_password: ${{ secrets.FTP_PASSWORD }}
-          local_source_dir: build/
+          local_source_dir: /home/runner/work/build/
           dist_target_dir:  gerenciador_pedidos/build/
           delete: "true"
           exclude: "'^.next/' '^.git/' '^README.md' '^node_modules/'"
