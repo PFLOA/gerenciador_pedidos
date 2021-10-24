@@ -37,7 +37,7 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 	//#endregion
 	//#region [ ref ]
 
-	const formRef = useRef(null);
+	const formRef = useRef<HTMLFormElement>(null);
 
 	//#endregion
 	//#region [ Handles ]
@@ -83,11 +83,11 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 				<title>Produtos</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Layout active={'produto'}>
+			<Layout active={'pedido'}>
 				{produtoLista?.data ? (
 					<>
 						<div className={`mb-4 py-2 ${styles.titulo}`}>
-							<h2>Produtos</h2>
+							<h2>Pedidos</h2>
 						</div>
 						<FormFilter
 							onSubmit={handleSubmit}
