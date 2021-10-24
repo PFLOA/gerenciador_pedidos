@@ -60,6 +60,10 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 		[filtro]
 	);
 
+	const clearFilter = () => {
+
+	}
+
 	//#endregion
 	//#region [ UseEffects ]
 
@@ -93,6 +97,7 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 							onSubmit={handleSubmit}
 							link="produto/novo"
 							formRef={formRef}
+							clearFilter={clearFilter}
 						>
 							<div className="row">
 								<div className="col-3">
