@@ -3,7 +3,7 @@ const { createServer } = require('http')
 const { parse } = require('url')
 const next = require('next')
 
-const prod = process.env.NODE_ENV
+const dev = process.env.NODE_ENV
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
