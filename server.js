@@ -3,7 +3,7 @@ const { createServer } = require('http')
 const { parse } = require('url')
 const next = require('next')
 
-const dev = process.env.NODE_ENV !== 'production'
+const prod = process.env.NODE_ENV
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
@@ -20,7 +20,7 @@ app.prepare().then(() => {
             handle(req, res, parsedUrl)
         }
     }).listen(3000, (err) => {
-        if (err) throw err
+        if (err) app.render('Erro na aplicação !')
         console.log('> Ready on http://localhost:3000/gerenciador')
     })
 })
