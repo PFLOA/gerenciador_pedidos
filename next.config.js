@@ -2,5 +2,5 @@
 module.exports = {
     reactStrictMode: true,
     basePath: '/gerenciador',
-    distDir: 'build',
+    distDir: '/build',
 }
