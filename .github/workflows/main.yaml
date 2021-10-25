@@ -17,7 +17,7 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
       - run: yarn build
-      - name: 📂 Sync files
+      - name: 📂 Build project
         uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
         with:
           ftp_host: ${{ secrets.FTP_SERVER }}
@@ -26,4 +26,13 @@ jobs:
           local_source_dir: /home/runner/work/gerenciador_pedidos/gerenciador_pedidos/build/
           dist_target_dir:  gerenciador_pedidos/build/
           delete: "true"
-          exclude: "'^.next/' '^.git/' '^README.md' '^node_modules/'"
+      - name: 📂 Sync project
+        uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
+        with:
+          ftp_host: ${{ secrets.FTP_SERVER }}
+          ftp_username: ${{ secrets.FTP_USER }}
+          ftp_password: ${{ secrets.FTP_PASSWORD }}
+          local_source_dir: ./
+          dist_target_dir:  gerenciador_pedidos/
+          delete: "true"
+          exclude: "'^.next/' '^.git/' '^README.md' '^node_modules/' '^.github/' '^.gitignore/'"
