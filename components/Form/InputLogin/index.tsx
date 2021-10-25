@@ -1,9 +1,13 @@
-import { AiOutlineUserAdd } from 'react-icons/ai';
-import { RiLockPasswordLine } from 'react-icons/ri';
+import { ChangeEvent } from 'react';
 
 import styles from './style.module.scss';
 
-const InputLogin = () => {
+interface InputLoginInterface {
+	handleChange(e: ChangeEvent<HTMLInputElement>): void;
+}
+const InputLogin: React.FC<InputLoginInterface> = ({
+	handleChange
+}) => {
 	return (
 		<>
 			<input
@@ -11,7 +15,8 @@ const InputLogin = () => {
 				placeholder="Usuário"
 				className={styles.input}
 				type="text"
-				name="username"
+				name="userName"
+				onChange={handleChange}
 			/>
 			<input
 				id="pw"
@@ -19,6 +24,7 @@ const InputLogin = () => {
 				className={styles.input}
 				type="password"
 				name="senha"
+				onChange={handleChange}
 			/>
 		</>
 	);

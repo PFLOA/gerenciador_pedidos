@@ -8,18 +8,19 @@ import FormFilter from '../../components/Form/FormFilter';
 
 import Input from '../../components/Form/Input';
 import Layout from '../../components/Layout';
-import TableProduto from '../../components/TableProduto';
+import TablePedido from '../../components/TablePedido';
 
 import Loader from '../../components/Loader';
 
 import styles from './style.module.scss';
 import { handleEventChange, handleMask } from '../../utils/handleChanges';
 import { buscarProdutosPorFiltro } from '../../service/produto.service';
-import { BuscarProdutosFiltroResponse } from '../../service/models/produto/produto.model';
 import { PropriedadesFormularios } from '../../utils/propriedadesFormulario';
+import { buscarPedidosPorFiltro } from '../../service/pedido.service';
+import { BuscarPedidoFiltroResponse } from '../../service/models/pedido/pedido.model';
 
 interface ProdutoProps {
-	produtoListaResult: BuscarProdutosFiltroResponse;
+	produtoListaResult: BuscarPedidoFiltroResponse;
 }
 
 const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
@@ -31,8 +32,8 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 		page: 1,
 		itemsPerPage: 10,
 	});
-	const [produtoLista, setProdutoLista] =
-		useState<BuscarProdutosFiltroResponse>();
+	const [pedidoLista, setPedidoLista] =
+		useState<BuscarPedidoFiltroResponse>();
 
 	//#endregion
 	//#region [ ref ]
@@ -50,10 +51,10 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 			e.preventDefault();
 			setIsLoading(true);
 			try {
-				const result = await buscarProdutosPorFiltro({
+				const result = await buscarPedidosPorFiltro({
 					params: filtro,
 				});
-				setProdutoLista(result);
+				setPedidoLista(result);
 			} catch (error) {}
 			setIsLoading(false);
 		},
@@ -61,41 +62,57 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 	);
 
 	const clearFilter = () => {
-
+		formRef.current?.reset();
+		setIsLoading(true)
+		setFiltro({
+			countTotal: true,
+			page: 1,
+			itemsPerPage: 10,
+		});
 	}
 
 	//#endregion
 	//#region [ UseEffects ]
 
 	useEffect(() => {
-		buscarProdutosPorFiltro({
+		buscarPedidosPorFiltro({
 			params: {
 				countTotal: true,
 				page: 1,
 				itemsPerPage: 10,
 			},
 		}).then((result) => {
-			setProdutoLista(result);
+			setPedidoLista(result);
 		});
 	}, []);
+
+	useEffect(() => {
+		buscarPedidosPorFiltro({
+			params: filtro,
+		}).then((result) => {
+			setPedidoLista(result);
+		});
+
+		setIsLoading(false)
+	}, [filtro]);
 
 	//#endregion
 
 	return (
 		<>
 			<Head>
-				<title>Produtos</title>
+				<title>Pedidos</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Layout active={'pedido'}>
-				{produtoLista?.data ? (
+				{pedidoLista?.data ? (
 					<>
 						<div className={`mb-4 py-2 ${styles.titulo}`}>
 							<h2>Pedidos</h2>
 						</div>
 						<FormFilter
 							onSubmit={handleSubmit}
-							link="produto/novo"
+							link="pedido/novo"
 							formRef={formRef}
 							clearFilter={clearFilter}
 						>
@@ -103,16 +120,8 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 								<div className="col-3">
 									<Input
 										type="text"
-										name="nomeProduto"
-										label="Nome Produto"
-										onChange={handleChange}
-									/>
-								</div>
-								<div className="col-3">
-									<Input
-										type="text"
-										name={PropriedadesFormularios.Money}
-										label="Preço"
+										name="cliente"
+										label="Nome Cliente"
 										onChange={handleChange}
 									/>
 								</div>
@@ -131,7 +140,7 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 								<Loader />
 							</div>
 						) : (
-							<TableProduto data={produtoLista} />
+							<TablePedido data={pedidoLista} />
 						)}
 					</>
 				) : (

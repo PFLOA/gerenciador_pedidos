@@ -1,7 +1,9 @@
 export default class EndPoints {
 	public static Login = 'Login';
 	public static Cliente = 'Cliente';
-	public static GetClientePorGuid = 'Cliente/Guid';
 	public static Produto = 'Produto';
+	public static Pedido = 'Pedido';
+	public static GetClientePorGuid = 'Cliente/Guid';
 	public static GetProdutoPorGuid = 'Produto/Guid';
+	public static GetPedidoPorGuid = 'Pedido/Guid';
 }

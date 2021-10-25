@@ -10,7 +10,6 @@ export const buscarProdutoPorGuid = async (guid: string): Promise<ProdutoModel> 
 	return await BuscarPorGuid<ProdutoModel>(EndPoints.GetProdutoPorGuid, guid);
 };
 export const alterarProduto = async (body: AlterarProdutoRequest): Promise<ProdutoModel> => {
-	console.log(body);
 	return await Alterar(EndPoints.Produto, body);
 };
 export const criarProduto = async (body: CriarProdutoRequest): Promise<ProdutoModel> => {

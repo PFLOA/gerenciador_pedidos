@@ -19,4 +19,8 @@
             background-image: linear-gradient($corAzulPrimarioButtonLogin, $corAzulSecundarioButtonLogin, $corAzulPrimarioButtonLogin);
         }
     }
+    .errors {
+        color: $corError;
+        text-align: center;
+    }
 }

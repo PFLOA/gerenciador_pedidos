@@ -1,21 +1,61 @@
-import Link from 'next/link';
-import { useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { Form } from 'react-bootstrap';
 
-import Input from '../../components/Form/InputLogin';
+import InputLogin from '../../components/Form/InputLogin';
+
+import Loader from '../../components/Loader';
+
+import { realizarLogin } from '../../service/login.service';
+import { handleEventChange } from '../../utils/handleChanges';
+
 import styles from './style.module.scss';
 
 const LoginWindow = () => {
-	const handleSubmit = useCallback(() => {}, []);
+	const [isLoading, setIsLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
+	const [login, setLogin] = useState({
+		userName: '',
+		senha: '',
+	});
+
+	const router = useRouter();
+
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		handleEventChange(e, login);
+	};
+	const handleSubmit = useCallback(
+		async (e: any) => {
+			setIsLoading(true);
+			e.preventDefault();
+			try {
+				const result = await realizarLogin(login.userName, login.senha);
+				router.push('/dashboard');
+			} catch (error: any) {
+				const { data, status } = error.response;
+				if(status === 404) setErrorMessage(data.messages[0]);
+				setIsLoading(false);
+			}
+		},
+		[login.senha, login.userName, router]
+	);
+
 	return (
 		<div className={styles.login}>
 			<h1>Login</h1>
 			<Form onSubmit={handleSubmit}>
-				<Input />
+				<InputLogin handleChange={handleChange} />
+				<div className="d-flex flex-column justify-content-center align-items-center">
+					{!isLoading ? (
+						<button className={styles.btn_login} onSubmit={handleSubmit}>
+							Login
+						</button>
+					) : (
+						<Loader />
+					)}
+					{errorMessage && <div className={styles.errors}>{errorMessage}</div>}
+				</div>
 			</Form>
-			<Link href="/dashboard">
-				<a className={styles.btn_login}>Logar</a>
-			</Link>
 		</div>
 	);
 };
