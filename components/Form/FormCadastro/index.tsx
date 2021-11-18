@@ -6,16 +6,14 @@ interface FormFilter {
 	onSubmit(e: any): void;
 	formRef: any;
 }
-const FormCadastro: React.FC<FormFilter> = ({
-	onSubmit,
-	formRef,
-	children,
-}) => {
+const FormCadastro: React.FC<FormFilter> = ({ onSubmit, formRef, children }) => {
 	return (
 		<form onSubmit={onSubmit} className={styles.form} ref={formRef}>
-			<div className={styles.inputs}>{children}</div>
-			<div className={styles.submit}>
-				<FormCadastroButton />
+			<div className={styles.inputs}>
+				{children}
+				<div className={styles.submit}>
+					<FormCadastroButton />
+				</div>
 			</div>
 		</form>
 	);

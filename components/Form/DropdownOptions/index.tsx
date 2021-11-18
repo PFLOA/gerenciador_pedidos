@@ -1,16 +1,19 @@
-import style from './style.module.scss'
+import style from './style.module.scss';
 
 interface DropdownOptionsProps {
+	id: string;
 	value: string;
 	name: string;
+	setData(valor: any): void;
 }
 
-const DropdownOptions: React.FC<DropdownOptionsProps> = ({ value, name }) => {
+const DropdownOptions: React.FC<DropdownOptionsProps> = ({ id, value, name, setData }) => {
+
+	
+
 	return (
-				<div className={`m-0 ${style.option_paragraph}`}>
-					<option value={value}>{name}</option>
-				</div>
-				);
+		
+	);
 };
 
 export default DropdownOptions;

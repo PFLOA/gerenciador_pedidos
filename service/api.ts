@@ -3,6 +3,11 @@ import { getToken, isAuthenticated } from './auth';
 
 const api = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_ENV_VARIABLE,
+	headers: {
+		'Access-Control-Allow-Origin': '*',
+		'Access-Control-Allow-Headers': '*',
+		'Access-Control-Allow-Method': 'GET, POST, PUT, DELETE, OPTIONS',
+	}
 });
 
 api.interceptors.request.use(async (config) => {
@@ -15,8 +20,6 @@ api.interceptors.request.use(async (config) => {
 
 api.interceptors.response.use(
 	async (status) => {
-		console.log(status);
-		
 		return Promise.resolve(status);
 	},
 	async (error: any) => {

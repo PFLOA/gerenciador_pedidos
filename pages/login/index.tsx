@@ -32,8 +32,19 @@ const LoginWindow = () => {
 				const result = await realizarLogin(login.userName, login.senha);
 				router.push('/dashboard');
 			} catch (error: any) {
-				const { data, status } = error.response;
-				if(status === 404) setErrorMessage(data.messages[0]);
+				if (error.response) {
+					if (error.response.status === 404) {
+						if(error.response.data.messages){
+							setErrorMessage(error.response.data.messages[0]);
+						}else{
+							setErrorMessage('Error interno do servidor ! Tente novamente.');
+						}
+					}
+				}
+				else
+				{
+					setErrorMessage('Error interno do servidor ! Tente novamente.');
+				}
 				setIsLoading(false);
 			}
 		},

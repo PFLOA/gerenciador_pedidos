@@ -3,6 +3,8 @@ import { maskCpf } from './utilsCpf';
 import { maskMoney } from './utilsMoney';
 import { maskTelefone } from './utilsTelefone';
 
+let timeout = {} as NodeJS.Timeout;
+
 export function handleEventChange<T>(e: any, state: T): any {
 	handleMask(e);
 	const obj: { [key: string]: any } = state;
@@ -39,4 +41,11 @@ export const handleMask = (e: any): void => {
 		default:
 			break;
 	}
+};
+
+export const debounce = (fn: () => void, time = 500): void => {
+	clearTimeout(timeout);
+	timeout = setTimeout(() => {
+		fn();
+	}, time);
 };

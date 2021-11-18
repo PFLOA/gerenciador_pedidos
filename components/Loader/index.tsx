@@ -1,9 +1,12 @@
 import styles from './style.module.scss';
 
-const Loader = () => {
+interface LoaderProps{
+	tamanho?: number;
+}
+const Loader: React.FC<LoaderProps> = ({ tamanho = 50 }) => {
 	return (
 		<>
-			<div className={styles.loader}></div>
+			<div className={styles.loader} style={{width: `${tamanho}px`, height: `${tamanho}px` }}></div>
 		</>
 	);
 };

@@ -1,4 +1,4 @@
-@import "../../../styles/importer.scss";
+@import "../../styles/importer.scss";
 @mixin btn {
     @include pxy(2, 8);
     border: 0;
@@ -38,17 +38,6 @@
     &:hover {
         background: $corBgBody;
     }
-}
-
-@import '../../../styles/importer';
-$corInputBorder: $corAzulSecundario;
-$corlabel: #747476;
-@mixin btn {
-    @include pxy(2, 8);
-    border: 0;
-    width: 160px;
-    color: $corTexto;
-    border-radius: 10px;
 }
 
 .active {

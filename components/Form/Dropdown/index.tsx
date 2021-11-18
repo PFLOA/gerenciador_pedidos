@@ -1,84 +1,64 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useMemo } from 'react-transition-group/node_modules/@types/react';
+import { debounce } from '../../../utils/handleChanges';
+import Loader from '../../Loader';
 
 import style from './style.module.scss';
 
 interface FormButton {
 	callback(req: string): void;
-	setData?: any;
+	close: boolean;
 	label: string;
+	nomeItem: string;
 }
 
-const Dropdown: React.FC<FormButton> = ({
-	callback,
-	setData,
-	label,
-	children,
-}) => {
+const Dropdown: React.FC<FormButton> = ({ callback, close, label, nomeItem, children }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const dropdownOptions = useRef<HTMLDivElement>(null);
 
-	function abre() {
-		let comp = dropdownOptions?.current;
-		if (comp) comp.style.display = 'block';
-	}
-
-	function fecha() {
-		let comp = dropdownOptions?.current;
-		if (comp) comp.style.display = 'none';
-	}
-
-	const handleChange = (e: any) => {
-		if (e.target.name == 'filtro') {
-			callback(e.target.value);
-			abre();
-		}
-	};
-	const handleClearInput = () => {
-		if (inputRef) {
-			const input = inputRef.current;
-			if (input) input.value = '';
-		}
+	const handleDropdown = () => {
+		const optionsContainer = document.querySelector(`.${style.options_container}`);
+		optionsContainer?.classList.toggle(`${style.active}`);
 	};
 
 	useEffect(() => {
-		document.addEventListener('click', (event: any) => {
-			fecha();
-			dropdownOptions?.current?.addEventListener(
-				'click',
-				function (e: any) {
-					if (inputRef) {
-						const input = inputRef.current;
-						if (input) {
-							setData(e.target.value);
-							input.value = e.target.text;
-						}
-					}
-				}
-			);
-		});
-	}, []);
+		if(close)
+			handleDropdown()
+	}, [close])
 
 	return (
-		<div className="d-flex flex-column">
-			<label className="mb-1">{label}</label>
-			<div className="d-flex align-items-center">
-				<input
-					className={`form-control ${style.styled_input}`}
-					type="text"
-					name="filtro"
-					onChange={handleChange}
-					ref={inputRef}
-				/>
-				{inputRef?.current?.value && (
-					<div className={style.clear_btn} onClick={handleClearInput}>
-						Clear
+		<>
+			<div>
+				<label className="mb-1">{label}</label>
+				<div className={style.select_box}>
+					<div className={`${style.options_container}`}>
+						<div className={style.option}>
+							<input
+								autoComplete="off"
+								type="text"
+								className={`form-control`}
+								id="filtro"
+								name="filtro"
+								placeholder={`Pesquisar ${label}`}
+								ref={inputRef}
+								onChange={(e: any) =>
+									debounce(() => {
+										if (e.target.name == 'filtro') {
+											callback(e.target.value);
+										}
+									})
+								}
+							/>
+						</div>
+						{children}
 					</div>
-				)}
+					<div className={style.selected} onClick={handleDropdown}>
+						<label className={`${style.label}`} id="nomeItem">
+							{nomeItem}
+						</label>
+					</div>
+				</div>
 			</div>
-			<div className={style.dropdown} tabIndex={0} ref={dropdownOptions}>
-				{children}
-			</div>
-		</div>
+		</>
 	);
 };
 

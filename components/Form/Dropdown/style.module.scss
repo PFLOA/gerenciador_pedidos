@@ -9,84 +9,82 @@ $corlabel: #747476;
     border-radius: 10px;
 }
 
-.novo {
-    @include btn;
-    p {
-        margin: 0;
-        text-align: center;
-    }
-    background: $corBgModalButton;
-    &:hover {
-        background: $corBgBody;
-    }
+.active {
+    max-height: 240px !important;
+    opacity: 1 !important;
+    overflow-y: scroll !important;
 }
 
-.submit {
-    @include btn;
-    margin-left: 20px;
-    background: $corBgColorPrincipal;
-    &:hover {
-        background: $corBgBody;
-    }
+.select_box .options_container::-webkit-scrollbar {
+    width: 8px;
+    background: #0d141f;
+    border-radius: 0 8px 8px 0;
 }
 
-.dropdown {
-    display: none;
-    padding: 10px;
-    z-index: 1000;
-    border: 1px solid $corInputBorder;
-    border-top: 0;
+.select_box .options_container::-webkit-scrollbar-thumb {
+    background: #525861;
+    border-radius: 0 8px 8px 0;
 }
 
-.styled_input {
-    background: $corBranco !important;
-    border: 1px solid $corInputBorder !important;
-    height: 38px;
-    padding: 10px;
-    @media screen and (max-width: 380px) {
-        font-size: 13px;
-    }
-}
-
-.clear_btn {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-left: -50px;
-    cursor: pointer;
-    color: $corBgBody;
-}
-
-.styled_label {
-    p {
-        margin: 0;
-        font-size: 16px;
-        color: $corlabel;
-    }
-}
-
-.opcional {
-    color: $corlabel;
-}
-
-.input_h {
-    height: 95px;
-}
-
-.styled_input_error {
-    border: 1px solid $corError !important;
-}
-
-.styled_label_error {
-    color: $corError !important;
-}
-
-.img_validation {
+.select_box {
     display: flex;
-    position: relative;
-    left: -1.6rem;
+    flex-direction: column;
+    width: 100%;
+    .options_container {
+        background: #002933;
+        color: #f5f6fa;
+        width: 100%;
+        max-height: 0;
+        transition: all 0.4s;
+        border-radius: 8px;
+        opacity: 0;
+        overflow: hidden;
+        order: 1;
+    }
+    .option {
+        .radio {
+            display: none;
+        }
+    }
 }
 
-.error_p {
-    font-size: 12px !important;
-    line-height: 15px !important;
-    color: $corError !important;
+.option,
+.selected {
+    padding: 8px 24px;
+    cursor: pointer;
+}
+
+.selected {
+    background: #002933;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    color: #f5f6fa;
+    position: relative;
+    order: 0;
+}
+
+.selected::after {
+    font-size: large;
+    content: "\2304";
+    position: absolute;
+    width: 32px;
+    right: 0px;
+    top: 1px;
+    height: 100%;
+    transition: all 0.4s;
+}
+
+.select_box .option:hover {
+    background: #414b57;
+}
+
+.select_box label {
+    cursor: pointer;
+}
+
+.input {
+    width: 100%;
+    background: $corBgColorPrincipal;
+    color: #f5f6fa;
 }
