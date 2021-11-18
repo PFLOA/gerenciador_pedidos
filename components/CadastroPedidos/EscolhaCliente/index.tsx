@@ -1,24 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { buscarClientesPorFiltro, buscarClientesPorGuid } from '../../../service/cliente.service';
+import { usePedido } from '../../../hooks/novoPedido';
+import { buscarClientesPorFiltro } from '../../../service/cliente.service';
 import { BuscarClientesFiltroResponse } from '../../../service/models/cliente/cliente.model';
-import { handleEventChange } from '../../../utils/handleChanges';
+import { formSetValue, handleEventChange } from '../../../utils/handleChanges';
 import DropdownCliente from '../../DropdownCliente';
-import Dropdown from '../../Form/Dropdown';
-import DropdownOptions from '../../Form/DropdownOptions';
-import FormCadastro from '../../Form/FormCadastro';
 import Input from '../../Form/Input';
-import Loader from '../../Loader';
-import styles from './style.module.scss';
 
-interface EscolhaClienteProps {
-	setCliente(cliente: string): void;
-	cliente: string;
-}
+interface EscolhaClienteProps {}
 
-const EscolhaCliente: React.FC<EscolhaClienteProps> = ({ setCliente, cliente }) => {
+const EscolhaCliente: React.FC<EscolhaClienteProps> = () => {
+	const { pedido } = usePedido();
+
 	const [isLoading, setIsLoading] = useState(false);
 	const [clienteList, setClienteList] = useState<BuscarClientesFiltroResponse>();
-	const [label, setLabel] = useState('');
 
 	const formRef = useRef<HTMLFormElement>(null);
 
@@ -54,24 +48,21 @@ const EscolhaCliente: React.FC<EscolhaClienteProps> = ({ setCliente, cliente }) 
 			setClienteList(result);
 			setIsLoading(false);
 		});
+
+		formSetValue(formRef, pedido)
+		setIsLoading(false);
 	}, []);
 
 	const handleChange = (e: any) => {
-		handleEventChange(e, cliente);
+		handleEventChange(e, pedido);
 	};
-
-	const handleSubmit = useCallback(async (e: any) => {}, []);
 
 	return (
 		<>
-			<form onSubmit={handleSubmit} ref={formRef}>
+			<form ref={formRef}>
 				<div className="row">
 					<div className="col-4">
-						<DropdownCliente callback={fetchClientes} 
-															setData={setCliente} 
-															listaCliente={clienteList?.data} 
-															isLoading={isLoading} 
-															nomeItem={label} />
+						<DropdownCliente callback={fetchClientes} listaCliente={clienteList?.data} isLoading={isLoading} />
 					</div>
 					<div className="col-2">
 						<Input autoComplete="off" type="text" name="nf" label="Nota Fiscal" onChange={handleChange} />

@@ -6,6 +6,6 @@ import { BuscarPedidoFiltroRequest, BuscarPedidoFiltroResponse, CriarPedidoReque
 export const buscarPedidosPorFiltro = async (filtro: ToQueryParams<BuscarPedidoFiltroRequest>): Promise<BuscarPedidoFiltroResponse> => {
 	return await BuscarPorFiltro(EndPoints.Pedido, filtro);
 };
-export const criarProduto = async (body: CriarPedidoRequest): Promise<PedidoModel> => {
-	return await Criar(EndPoints.Produto, body);
+export const criarPedido = async (body: CriarPedidoRequest): Promise<PedidoModel> => {
+	return await Criar(EndPoints.Pedido, body);
 };

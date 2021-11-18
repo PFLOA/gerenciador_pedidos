@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import { PropriedadesFormularios } from './propriedadesFormulario';
 import { maskCpf } from './utilsCpf';
 import { maskMoney } from './utilsMoney';
@@ -48,4 +49,22 @@ export const debounce = (fn: () => void, time = 500): void => {
 	timeout = setTimeout(() => {
 		fn();
 	}, time);
+};
+
+export const formSetValue = (formRef: RefObject<HTMLFormElement>, objeto: any) => {
+	const obj: { [key: string]: any } = objeto;
+	
+	var elements = formRef.current?.elements;
+
+	for (var prop in obj) {
+		if (elements != null) {
+			const element = elements.namedItem(prop) as Element;
+
+			if (element?.nodeName == 'TEXTAREA') {
+				element.innerHTML = obj[prop];
+			} else {
+				element?.setAttribute('value', obj[prop]);
+			}
+		}
+	}
 };

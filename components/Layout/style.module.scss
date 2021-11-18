@@ -17,9 +17,10 @@
         flex-direction: column;
         width: 100%;
         .card {
-            min-height: 600px;
+            min-height: 800px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             margin-bottom: 20px;
             padding: 12px;
             border-radius: 15px;

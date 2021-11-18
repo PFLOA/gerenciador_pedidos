@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePedido } from '../../hooks/novoPedido';
 import { ClienteModel } from '../../service/models/cliente/cliente.model';
 import Dropdown from '../Form/Dropdown';
 import Loader from '../Loader';
@@ -7,24 +8,29 @@ import style from './style.module.scss';
 
 interface DropdownClienteProp {
 	callback(req: string): void;
-	setData(value: any): any;
 	listaCliente: any;
 	isLoading: boolean;
-	nomeItem: string;
 }
 
-const DropdownCliente: React.FC<DropdownClienteProp> = ({ listaCliente, isLoading, callback, setData, nomeItem }) => {
-	const [nomeClienteLabel, setNomeClienteLabel] = useState('');
-	const [close, setClose] = useState(false)
+const DropdownCliente: React.FC<DropdownClienteProp> = ({ listaCliente, isLoading, callback }) => {
+	const { setCliente, setPedido, pedido, cliente } = usePedido();
+	const [close, setClose] = useState(false);
 
 	const handleOptionClick = (nomeCliente: string, guid: string) => {
-		setData(guid);
-		setNomeClienteLabel(nomeCliente);
-		setClose(true)
+		setCliente(nomeCliente);
+		setClose(true);
+		setPedido({
+			clienteGuid: guid,
+			nf: pedido.nf,
+			observacoes: pedido.observacoes,
+			statusPedido: pedido.statusPedido,
+			total: pedido.total,
+			itenPedido: pedido.itenPedido
+		});
 	};
 
 	return (
-		<Dropdown label="Pesquisa Cliente" callback={callback} nomeItem={nomeClienteLabel} close={close}>
+		<Dropdown label="Pesquisa Cliente" callback={callback} nomeItem={cliente} close={close}>
 			{!isLoading ? (
 				listaCliente?.map((cliente: ClienteModel, index: number) => {
 					return (

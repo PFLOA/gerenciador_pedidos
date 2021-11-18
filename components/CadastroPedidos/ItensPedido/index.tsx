@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Overlay, Tooltip } from 'react-bootstrap';
+import { usePedido } from '../../../hooks/novoPedido';
 import { ItemPedidoModel } from '../../../service/models/itemPedido/item-pedido.model';
 import { BuscarProdutosFiltroResponse } from '../../../service/models/produto/produto.model';
 import { buscarProdutoPorGuid, buscarProdutosPorFiltro } from '../../../service/produto.service';
@@ -13,14 +14,11 @@ import Tr from '../../Table/Tr';
 
 import styles from './style.module.scss';
 
-interface ItensPedidoProps {
-	listaItensPedido: ItemPedidoModel[];
-	setListaItensPedido(listaItensPedido: ItemPedidoModel[]): void;
-}
+interface ItensPedidoProps {}
 
 interface LinhasProp {
 	item: ItemPedidoModel;
-	remover(e: any, id: number): void;
+	remover(id: number): void;
 }
 
 const Linhas: React.FC<LinhasProp> = ({ item, remover }) => {
@@ -33,7 +31,7 @@ const Linhas: React.FC<LinhasProp> = ({ item, remover }) => {
 			<Td>{quantidade}</Td>
 			<Td>{formatMoney(quantidade * preco)}</Td>
 			<Td>
-				<button type="button" className={`btn btn-warning ${styles.remover_item}`} onClick={(e) => remover(e, idProduto)}>
+				<button type="button" className={`btn btn-warning ${styles.remover_item}`} onClick={(e) => remover(idProduto)}>
 					Remover
 				</button>
 			</Td>
@@ -41,11 +39,12 @@ const Linhas: React.FC<LinhasProp> = ({ item, remover }) => {
 	);
 };
 
-const ItensPedido: React.FC<ItensPedidoProps> = ({ listaItensPedido, setListaItensPedido }) => {
+const ItensPedido: React.FC<ItensPedidoProps> = () => {
+	const { setListagemPedido, setPedido, removerItemPedido, listagemPedido, addItemPedido } = usePedido();
+
 	//#region [ UseState ]
 
 	const [itemPedido, setItemPedido] = useState<ItemPedidoModel>({} as ItemPedidoModel);
-	const [listaItens, setListaItens] = useState(listaItensPedido);
 	const [isLoading, setIsLoading] = useState(false);
 	const [guidProduto, setGuidProduto] = useState('');
 	const [produtoList, setProdutoList] = useState<BuscarProdutosFiltroResponse>();
@@ -95,21 +94,9 @@ const ItensPedido: React.FC<ItensPedidoProps> = ({ listaItensPedido, setListaIte
 				return;
 			}
 
-			const found = listaItens.find((produto) => produto.idProduto == itemPedido.idProduto);
-			if (found) return;
-
-			const newList = [...listaItens];
-
-			newList.push({
-				idProduto: itemPedido.idProduto,
-				produto: itemPedido.produto,
-				quantidade: itemPedido.quantidade,
-				preco: itemPedido.preco,
-			});
-
-			setListaItens(newList);
+			addItemPedido(itemPedido);
 		},
-		[itemPedido.idProduto, itemPedido.preco, itemPedido.produto, itemPedido.quantidade, listaItens]
+		[addItemPedido, itemPedido]
 	);
 
 	const clearProdutos = (input: any) => {
@@ -156,13 +143,7 @@ const ItensPedido: React.FC<ItensPedidoProps> = ({ listaItensPedido, setListaIte
 	}, [mensagem]);
 	//#endregion
 
-	const removerItemPedido = (e: any, id: number) => {
-		var filtered = listaItens.filter(function (value) {
-			if (value.idProduto !== id) return value;
-		});
-
-		setListaItens(filtered);
-	};
+	
 
 	return (
 		<>
@@ -200,7 +181,7 @@ const ItensPedido: React.FC<ItensPedidoProps> = ({ listaItensPedido, setListaIte
 				<table className={styles.table}>
 					<thead>
 						<tr>
-							<Th width={500}>Nome Produto</Th>
+							<Th width={1000}>Nome Produto</Th>
 							<Th width={400}>Preço</Th>
 							<Th width={250}>Quantidade</Th>
 							<Th width={250}>Total</Th>
@@ -208,7 +189,7 @@ const ItensPedido: React.FC<ItensPedidoProps> = ({ listaItensPedido, setListaIte
 						</tr>
 					</thead>
 					<tbody>
-						{listaItens?.map((value: ItemPedidoModel) => (
+						{listagemPedido?.map((value: ItemPedidoModel) => (
 							<Linhas key={value.idProduto} item={value} remover={removerItemPedido} />
 						))}
 					</tbody>

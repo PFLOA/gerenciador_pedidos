@@ -1,11 +1,11 @@
 import styles from './style.module.scss';
 
 interface ThProps {
-	width: number;
+	width?: number;
 }
 const Th: React.FC<ThProps> = ({ width, children }) => {
 	return (
-		<th className={styles.th} style={{ width: `${width}px` }}>
+		<th className={styles.th} style={{ width: `${width ? width + 'px' : '100%'}` }}>
 			{children}
 		</th>
 	);
