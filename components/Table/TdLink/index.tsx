@@ -9,7 +9,7 @@ interface TdLinkProps {
 const TdLink: React.FC<TdLinkProps> = ({ link, children }) => {
 	return (
 		<Td>
-			<Link href={link}>
+			<Link href={link} passHref>
 				<a className={styles.link}>{children}</a>
 			</Link>
 		</Td>

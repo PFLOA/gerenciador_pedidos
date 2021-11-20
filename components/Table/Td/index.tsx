@@ -1,7 +1,19 @@
 import styles from './style.module.scss';
 
-const Td: React.FC = ({ children }) => {
-	return <td className={styles.td}>{children}</td>;
+interface TdProps {
+	align?: 'center';
+	tooltip?: boolean;
+	titleTooltip?: string;
+}
+
+const Td: React.FC<TdProps> = ({ align, tooltip = false, titleTooltip, children }) => {
+	return tooltip ? (
+		<td data-toggle="tooltip" data-placement="right" title={titleTooltip} className={`${align == 'center' && 'text-center'} ${styles.td}`}>
+			{children}
+		</td>
+	) : (
+		<td className={`${align == 'center' && 'text-center'} ${styles.td}`}>{children}</td>
+	);
 };
 
 export default Td;

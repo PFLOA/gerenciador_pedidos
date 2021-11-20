@@ -106,7 +106,7 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 			</Head>
 			<Layout active={'pedido'}>
 				{pedidoLista?.data ? (
-					<>
+					<div>
 						<div className={`mb-4 py-2 ${styles.titulo}`}>
 							<h2>Pedidos</h2>
 						</div>
@@ -142,7 +142,7 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 						) : (
 							<TablePedido data={pedidoLista} />
 						)}
-					</>
+					</div>
 				) : (
 					<div className={styles.loader}>
 						<Loader />

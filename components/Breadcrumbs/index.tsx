@@ -1,16 +1,20 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Breadcrumb } from 'react-bootstrap';
 import { usePedido } from '../../hooks/novoPedido';
 import { CrumbsList } from '../../service/models/comp-props/breadcrumbs';
 import { criarPedido } from '../../service/pedido.service';
+import Loader from '../Loader';
 
 interface BreadCrumbsProps {
 	listComponentes: CrumbsList[];
 }
 
 const Breadcrumbs: React.FC<BreadCrumbsProps> = ({ listComponentes }) => {
-	
+	const [isLoading, setIsLoading] = useState(false);
+
 	const { pedido } = usePedido();
+	const router = useRouter();
 
 	const [actualComponent, setActualComponent] = useState(listComponentes[0]);
 
@@ -24,7 +28,13 @@ const Breadcrumbs: React.FC<BreadCrumbsProps> = ({ listComponentes }) => {
 		setActualComponent((comp) => listComponentes[comp.id - 1 - 1]);
 	};
 	const handleCriarPedido = async () => {
-		const retorno = await criarPedido(pedido);
+		setIsLoading(true);
+		try {
+			await criarPedido(pedido);
+			router.push('/pedido');
+		} catch (error) {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -47,10 +57,12 @@ const Breadcrumbs: React.FC<BreadCrumbsProps> = ({ listComponentes }) => {
 					<button onClick={proximo} className="btn btn-info">
 						Próximo
 					</button>
-				) : (
+				) : !isLoading ? (
 					<button onClick={handleCriarPedido} className="btn btn-info">
 						Criar Pedido
 					</button>
+				) : (
+					<Loader tamanho={32}/>
 				)}
 			</div>
 		</>

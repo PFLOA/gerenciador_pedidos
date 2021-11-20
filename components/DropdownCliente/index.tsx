@@ -1,3 +1,4 @@
+import router from 'next/router';
 import React, { useState } from 'react';
 import { usePedido } from '../../hooks/novoPedido';
 import { ClienteModel } from '../../service/models/cliente/cliente.model';
@@ -25,23 +26,31 @@ const DropdownCliente: React.FC<DropdownClienteProp> = ({ listaCliente, isLoadin
 			observacoes: pedido.observacoes,
 			statusPedido: pedido.statusPedido,
 			total: pedido.total,
-			itenPedido: pedido.itenPedido
+			itenPedido: pedido.itenPedido,
+			dataCadastro: pedido.dataCadastro,
 		});
 	};
 
 	return (
 		<Dropdown label="Pesquisa Cliente" callback={callback} nomeItem={cliente} close={close}>
 			{!isLoading ? (
-				listaCliente?.map((cliente: ClienteModel, index: number) => {
-					return (
-						<div key={index} className={style.option} onClick={() => handleOptionClick(cliente.nomeCliente, cliente.guid)}>
-							<input type="radio" className={style.radio} id={index.toString()} />
-							<label htmlFor={index.toString()} onClick={() => handleOptionClick(cliente.nomeCliente, cliente.guid)}>
-								{cliente.nomeCliente}
-							</label>
-						</div>
-					);
-				})
+				listaCliente?.length > 0 ? (
+					listaCliente?.map((cliente: ClienteModel, index: number) => {
+						return (
+							<div key={index} className={style.option} onClick={() => handleOptionClick(cliente.nomeCliente, cliente.guid)}>
+								<input type="radio" className={style.radio} id={index.toString()} />
+								<label htmlFor={index.toString()} onClick={() => handleOptionClick(cliente.nomeCliente, cliente.guid)}>
+									{cliente.nomeCliente}
+								</label>
+							</div>
+						);
+					})
+				) : (
+					<div className={style.option} onClick={() => router.push('/cliente/novo')}>
+						<input type="radio" className={style.radio} />
+						<label>Cadastrar Novo Cliente</label>
+					</div>
+				)
 			) : (
 				<Loader tamanho={30} />
 			)}

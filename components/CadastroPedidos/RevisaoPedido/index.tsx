@@ -41,7 +41,7 @@ const RevisaoPedido: React.FC<RevisaoPedidoProps> = () => {
 					<h6 className="p-0 m-0">{cliente}</h6>
 				</div>
 			</div>
-			<hr/>
+			<hr />
 			<div className="row align-items-center">
 				<div className="col-2">
 					<h4>Nota Fiscal (NF):</h4>
@@ -50,7 +50,7 @@ const RevisaoPedido: React.FC<RevisaoPedidoProps> = () => {
 					<h6 className="p-0 m-0">{pedido.nf}</h6>
 				</div>
 			</div>
-			<hr/>
+			<hr />
 			<div className="row align-items-center">
 				<div className="col-2">
 					<h4>Observações:</h4>
@@ -59,7 +59,7 @@ const RevisaoPedido: React.FC<RevisaoPedidoProps> = () => {
 					<h6 className="p-0 m-0">{pedido.observacoes}</h6>
 				</div>
 			</div>
-			<hr/>
+			<hr />
 			<div className="row align-items-center">
 				<div className="col-2">
 					<h4>Total:</h4>
@@ -68,25 +68,25 @@ const RevisaoPedido: React.FC<RevisaoPedidoProps> = () => {
 					<h6 className="p-0 m-0">{formatMoney(pedido.total)}</h6>
 				</div>
 			</div>
-			<hr/>
+			<hr />
 			<div className="row align-items-center">
 				<div className={styles.listagem_pedidos}>
-				<table className={styles.table}>
-					<thead>
-						<tr>
-							<Th width={1000}>Nome Produto</Th>
-							<Th width={400}>Preço</Th>
-							<Th width={250}>Quantidade</Th>
-							<Th width={250}>Total</Th>
-						</tr>
-					</thead>
-					<tbody>
-						{listagemPedido?.map((value: ItemPedidoModel) => (
-							<Linhas key={value.idProduto} item={value} />
-						))}
-					</tbody>
-				</table>
-			</div>
+					<table className={styles.table}>
+						<thead>
+							<tr>
+								<Th width={1000}>Nome Produto</Th>
+								<Th width={400}>Preço</Th>
+								<Th width={250}>Quantidade</Th>
+								<Th width={250}>Total</Th>
+							</tr>
+						</thead>
+						<tbody>
+							{listagemPedido?.map((value: ItemPedidoModel) => (
+								<Linhas key={value.idProduto} item={value} />
+							))}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</>
 	);

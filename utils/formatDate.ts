@@ -19,7 +19,7 @@ const formatDate = ({
 
   return Intl.DateTimeFormat(locale, formatDate).format(value);
 };
-export const formatDatePedido = (value: Date): string => {
-  return `${value.getMonth}/${value.getFullYear}`;
-};
+
+export const formatDatePedido = (value: Date): string => new Date(value).toLocaleDateString();
+
 export default formatDate;

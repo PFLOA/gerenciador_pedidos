@@ -16,6 +16,7 @@ type CartContextData = {
 const PedidoContext = createContext<CartContextData>({} as CartContextData);
 
 export const PedidoProvider: React.FC = ({ children }) => {
+
 	const [cliente, setClientes] = useState<string>('');
 	const [listagemPedido, setListagemPedidos] = useState<ItemPedidoModel[]>([]);
 	const [listaItensPedido, setListaItensPedido] = useState<ItensPedidoModel[]>([]);
@@ -26,6 +27,7 @@ export const PedidoProvider: React.FC = ({ children }) => {
 		statusPedido: 0,
 		total: 0,
 		itenPedido: [],
+		dataCadastro: new Date()
 	});
 
 	const setCliente = useCallback((value: string) => {
@@ -80,10 +82,9 @@ export const PedidoProvider: React.FC = ({ children }) => {
 			})
 
 			setListaItensPedido(newListItensPedido);
-
 			setListagemPedido(newList);
 		},
-		[setListagemPedido]
+		[listaItensPedido, listagemPedido, setListagemPedido]
 	);
 
 	useEffect(() => {
@@ -95,10 +96,11 @@ export const PedidoProvider: React.FC = ({ children }) => {
 				nf: pedido.nf,
 				observacoes: pedido.observacoes,
 				statusPedido: pedido.statusPedido,
-				total: total
+				total: total,
+				dataCadastro: pedido.dataCadastro
 			})
 			
-	}, [calculateTotal, listagemPedido, listaItensPedido])
+	}, [listagemPedido, listaItensPedido])
 
 	return <PedidoContext.Provider value={{ setCliente, setListagemPedido, setPedido, addItemPedido, removerItemPedido, listagemPedido, pedido, cliente }}>{children}</PedidoContext.Provider>;
 };

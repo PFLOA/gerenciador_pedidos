@@ -13,6 +13,7 @@ import styles from './style.module.scss';
 import { handleEventChange } from '../../../utils/handleChanges';
 import { criarCliente } from '../../../service/cliente.service';
 import { CriarClienteRequest } from '../../../service/models/cliente/cliente.model';
+import { useRouter } from 'next/router';
 
 const NovoCliente: React.FC = () => {
 	//#region [ UseState ]
@@ -26,6 +27,7 @@ const NovoCliente: React.FC = () => {
 	//#region [ ref ]
 
 	const formRef = useRef(null);
+	const router = useRouter();
 
 	//#endregion
 	//#region [ Handles ]
@@ -39,10 +41,11 @@ const NovoCliente: React.FC = () => {
 			setIsLoading(true);
 			try {
 				const result = await criarCliente(cliente);
+				router.push('/pedido/novo')
 			} catch (error) {}
 			setIsLoading(false);
 		},
-		[cliente]
+		[cliente, router]
 	);
 
 	//#endregion
@@ -57,7 +60,7 @@ const NovoCliente: React.FC = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<Layout active={'cliente'}>
-				<>
+				<div>
 					<div className={`mb-4 py-2 ${styles.titulo}`}>
 						<h2>Novo Cliente</h2>
 					</div>
@@ -77,7 +80,7 @@ const NovoCliente: React.FC = () => {
 					) : (
 						<Loader />
 					)}
-				</>
+				</div>
 			</Layout>
 		</>
 	);

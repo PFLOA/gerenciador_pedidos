@@ -49,7 +49,7 @@ const EscolhaCliente: React.FC<EscolhaClienteProps> = () => {
 			setIsLoading(false);
 		});
 
-		formSetValue(formRef, pedido)
+		formSetValue(formRef, pedido);
 		setIsLoading(false);
 	}, []);
 
@@ -61,15 +61,20 @@ const EscolhaCliente: React.FC<EscolhaClienteProps> = () => {
 		<>
 			<form ref={formRef}>
 				<div className="row">
-					<div className="col-4">
+					<div className="col-6">
 						<DropdownCliente callback={fetchClientes} listaCliente={clienteList?.data} isLoading={isLoading} />
 					</div>
 					<div className="col-2">
 						<Input autoComplete="off" type="text" name="nf" label="Nota Fiscal" onChange={handleChange} />
 					</div>
-					<div className="col-4">
+					<div className="col-2">
+						<Input type="date" name="dataCadastro" label="Data Cadastro" onChange={handleChange} />
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-6">
 						<label className="mb-2">Observações</label>
-						<textarea autoComplete="off" className="form-control" name="observacoes" onChange={handleChange}></textarea>
+						<textarea autoComplete="off" rows={6} className="form-control" name="observacoes" onChange={handleChange}></textarea>
 					</div>
 				</div>
 			</form>

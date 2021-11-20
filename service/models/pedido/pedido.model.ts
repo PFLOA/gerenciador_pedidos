@@ -1,6 +1,6 @@
 import { ClienteModel } from '../cliente/cliente.model';
 import { BaseFilter, Entity, FilterResponse } from '../core/core.model';
-import { ItemPedidoModel, ItensPedidoModel } from '../itemPedido/item-pedido.model';
+import { ItemPedidoModel, ItemPedidoModelPedidoResponse, ItensPedidoModel } from '../itemPedido/item-pedido.model';
 import { ProdutoModel } from '../produto/produto.model';
 
 export enum StatusPedido {
@@ -23,13 +23,21 @@ export interface CriarPedidoRequest {
 	nf: string;
 	observacoes: string;
 	total: number;
+	dataCadastro: Date;
 }
 export interface BuscarPedidoFiltroRequest extends BaseFilter {
-	statusPedido?: string;
+	statusPedido?: StatusPedido;
 	cliente?: string;
 	produto?: string;
 	nf?: string;
 	dataCadastro?: Date;
 }
-export interface BuscarPedidoFiltroResponse
-	extends FilterResponse<PedidoModel> {}
+export interface BuscarPedidoPorGuid {
+	nf: string;
+	observacoes: string;
+	total: number;
+	statusPedido: StatusPedido;
+	clienteResponse: ClienteModel
+	itensPedidoResponse: ItemPedidoModelPedidoResponse[];
+}
+export interface BuscarPedidoFiltroResponse extends FilterResponse<PedidoModel> {}

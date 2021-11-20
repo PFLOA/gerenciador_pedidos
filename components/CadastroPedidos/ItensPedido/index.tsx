@@ -40,7 +40,7 @@ const Linhas: React.FC<LinhasProp> = ({ item, remover }) => {
 };
 
 const ItensPedido: React.FC<ItensPedidoProps> = () => {
-	const { setListagemPedido, setPedido, removerItemPedido, listagemPedido, addItemPedido } = usePedido();
+	const { removerItemPedido, listagemPedido, addItemPedido } = usePedido();
 
 	//#region [ UseState ]
 
@@ -149,11 +149,11 @@ const ItensPedido: React.FC<ItensPedidoProps> = () => {
 		<>
 			<form onSubmit={handleSubmit} ref={formRef}>
 				<div className="row mb-5">
-					<div className="col-4">
+					<div className="col-6">
 						<DropdownProduto callback={fetchProdutos} setData={setGuidProduto} listaProduto={produtoList?.data} isLoading={isLoading} />
 					</div>
 					<div className="col-2">
-						<Input label="Preço" name="preco" readOnly onChange={handleChangeItemPedido} />
+						<Input label="Preço" name="preco" onChange={handleChangeItemPedido} />
 					</div>
 					<div className="col-2">
 						<Input
