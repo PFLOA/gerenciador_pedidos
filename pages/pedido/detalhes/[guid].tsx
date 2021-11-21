@@ -29,9 +29,9 @@ const Linhas: React.FC<LinhasProp> = ({ item }) => {
 	return (
 		<Tr index={idProduto}>
 			<Td>{produtoResponse.nomeProduto}</Td>
-			<Td>{formatMoney(produtoResponse.preco)}</Td>
+			<Td>{formatMoney(preco)}</Td>
 			<Td>{quantidade}</Td>
-			<Td>{formatMoney(quantidade * produtoResponse.preco)}</Td>
+			<Td>{formatMoney(quantidade * preco)}</Td>
 		</Tr>
 	);
 };
