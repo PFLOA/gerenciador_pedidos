@@ -4,8 +4,8 @@ import { usePedido } from '../../../hooks/novoPedido';
 import { ItemPedidoModel } from '../../../service/models/itemPedido/item-pedido.model';
 import { BuscarProdutosFiltroResponse } from '../../../service/models/produto/produto.model';
 import { buscarProdutoPorGuid, buscarProdutosPorFiltro } from '../../../service/produto.service';
-import { handleEventChange } from '../../../utils/handleChanges';
-import { formatMoney } from '../../../utils/utilsMoney';
+import { handleEventChange, handleMask } from '../../../utils/handleChanges';
+import { formatMoney, maskMoney, removerMaskMoney, removerMaskMoneyString } from '../../../utils/utilsMoney';
 import DropdownProduto from '../../DropdownProduto';
 import Input from '../../Form/Input';
 import Td from '../../Table/Td';
@@ -85,6 +85,12 @@ const ItensPedido: React.FC<ItensPedidoProps> = () => {
 
 	const handleChangeItemPedido = (e: any) => {
 		handleEventChange(e, itemPedido);
+		if (itemPedido.preco) {
+			setItemPedido({
+				...itemPedido,
+				preco: removerMaskMoney(itemPedido.preco),
+			});
+		}
 	};
 
 	const addProdutoListaItens = useCallback(
@@ -98,10 +104,6 @@ const ItensPedido: React.FC<ItensPedidoProps> = () => {
 		},
 		[addItemPedido, itemPedido]
 	);
-
-	const clearProdutos = (input: any) => {
-		if (input) input.value = '';
-	};
 
 	//#endregion
 	//#region [ useEffect ]
@@ -142,8 +144,6 @@ const ItensPedido: React.FC<ItensPedidoProps> = () => {
 		return mensagem ? true : false;
 	}, [mensagem]);
 	//#endregion
-
-	
 
 	return (
 		<>

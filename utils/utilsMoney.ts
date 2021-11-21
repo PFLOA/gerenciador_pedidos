@@ -2,7 +2,7 @@ export const removerMaskMoney = (value: number): number => {
 	return parseFloat(value.toString().replace('R$', '').replaceAll('.', '').replace(',', '.'));
 };
 export const removerMaskMoneyString = (value: string): number => {
-	return parseFloat(value.replace('R$', '').replaceAll('.', '').replace(',', '.'));
+	return parseFloat(value.replace('R$', '').replaceAll('.', '').replace(',', '.')) * 10;
 };
 export const formatMoney = (money: number): string => {
 	return new Intl.NumberFormat('pt-BR', {

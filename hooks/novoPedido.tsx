@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { ItemPedidoModel, ItensPedidoModel } from '../service/models/itemPedido/item-pedido.model';
 import { CriarPedidoRequest } from '../service/models/pedido/pedido.model';
+import { removerMaskMoney, removerMaskMoneyString } from '../utils/utilsMoney';
 
 type CartContextData = {
 	setCliente(cliente: string): void;

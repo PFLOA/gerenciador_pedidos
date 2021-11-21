@@ -32,11 +32,10 @@ const Linhas = (item: PedidoModel, index: number) => {
 
 	return (
 		<Tr index={index} key={index}>
-			<Td>{item.cliente.nomeCliente}</Td>
+			<Td tooltip={true} titleTooltip={item.observacoes}>{item.cliente.nomeCliente}</Td>
 			<Td tooltip={true} titleTooltip={statusPedido?.status} align={'center'}>
 				<GrStatusGoodSmall  className={`me-3 ${statusPedido?.color}`} />
 			</Td>
-			<Td>{item.guid}</Td>
 			<Td>{formatDatePedido(item.dataCadastro)}</Td>
 			<Td>
 				<Link
@@ -58,7 +57,6 @@ const TablePedido: React.FC<TablePedidoProps> = ({ data }) => {
 				<tr>
 					<Th width={700}>Nome Cliente</Th>
 					<Th align={'center'} width={50}>Status Pedido</Th>
-					<Th width={400}>Guid</Th>
 					<Th width={200}>Data Cadastro</Th>
 					<Th width={250}></Th>
 				</tr>

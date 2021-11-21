@@ -12,37 +12,39 @@ import Loader from '../../../components/Loader';
 import styles from './style.module.scss';
 import { handleEventChange } from '../../../utils/handleChanges';
 import { criarCliente } from '../../../service/cliente.service';
-import { CriarClienteRequest } from '../../../service/models/cliente/cliente.model';
+import { CriarProdutoRequest } from '../../../service/models/produto/produto.model';
+import { criarProduto } from '../../../service/produto.service';
+import { useRouter } from 'next/router';
 
 const NovoProduto: React.FC = () => {
 	//#region [ UseState ]
 
 	const [isLoading, setIsLoading] = useState(false);
-	const [cliente, setCliente] = useState<CriarClienteRequest>(
-		{} as CriarClienteRequest
-	);
+	const [produto, setProduto] = useState<CriarProdutoRequest>({} as CriarProdutoRequest);
 
 	//#endregion
 	//#region [ ref ]
 
+	const router = useRouter();
 	const formRef = useRef(null);
 
 	//#endregion
 	//#region [ Handles ]
 
 	const handleChange = (e: any) => {
-		const { name, value } = handleEventChange(e, cliente);
+		handleEventChange(e, produto);
 	};
 	const handleSubmit = useCallback(
 		async (e: any) => {
 			e.preventDefault();
 			setIsLoading(true);
 			try {
-				const result = await criarCliente(cliente);
+				const result = await criarProduto(produto);
+				router.push('/pedido/novo');
 			} catch (error) {}
 			setIsLoading(false);
 		},
-		[cliente]
+		[produto, router]
 	);
 
 	//#endregion
@@ -56,20 +58,28 @@ const NovoProduto: React.FC = () => {
 				<title>Clientes</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Layout active={'cliente'}>
-				<>
+			<Layout active={'produto'}>
+				<div>
 					<div className={`mb-4 py-2 ${styles.titulo}`}>
-						<h2>Novo Cliente</h2>
+						<h2>Novo Produto</h2>
 					</div>
 					{!isLoading ? (
 						<FormCadastro onSubmit={handleSubmit} formRef={formRef}>
 							<div className="row">
 								<div className="col-5">
+									<Input type="text" name="nomeProduto" label="Nome Produto" onChange={handleChange} />
+								</div>
+								<div className="col-2">
 									<Input
 										type="text"
-										name="nomeCliente"
-										label="Nome Cliente"
-										onChange={handleChange}
+										name="preco"
+										label="Preço"
+										onChange={(e) =>
+											setProduto({
+												...produto,
+												preco: ~~e.target.value,
+											})
+										}
 									/>
 								</div>
 							</div>
@@ -77,7 +87,7 @@ const NovoProduto: React.FC = () => {
 					) : (
 						<Loader />
 					)}
-				</>
+				</div>
 			</Layout>
 		</>
 	);
