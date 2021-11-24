@@ -20,13 +20,12 @@ const Dashboard = () => {
 			.then((item) => {
 				setItemMaisVendido(item);
 				setIsLoading(false);
+				const data = itemMaisVendidoRef?.current;
+				data?.setAttribute('value', `${date.getFullYear()}-${date.getMonth()}`);
 			})
 			.catch((error) => {
 				setIsLoading(false);
 			});
-
-			const item = itemMaisVendidoRef?.current;
-		item?.setAttribute('value', `${date.getFullYear()}-${date.getMonth()}`);
 	}, []);
 
 	const handleCardItemMaisVendido = (e: any) => {
@@ -57,7 +56,7 @@ const Dashboard = () => {
 
 	return (
 		<Layout active="dashboard">
-			<div className="d-flex flex-wrap">
+			<div className={`d-flex flex-wrap ${isLoading && 'align-items-center h-100 justify-content-center'}`}>
 				{!isLoading ? (
 					<Card titulo={'Item mais vendido mês'} footer={footer}>
 						<div className="d-flex flex-column">
@@ -75,7 +74,9 @@ const Dashboard = () => {
 						</div>
 					</Card>
 				) : (
-					<Loader />
+					<div className="align-self-center"> 
+						<Loader />
+					</div>
 				)}
 			</div>
 		</Layout>
