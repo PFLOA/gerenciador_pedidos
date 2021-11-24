@@ -7,6 +7,7 @@ export enum StatusPedido {
 	EM_ANDAMENTO = 0,
 	ENTREGUE = 1,
 	ATRASO = 2,
+	CANCELAR = 3,
 }
 export interface PedidoModel extends Entity {
 	statusPedido: StatusPedido;
@@ -24,6 +25,10 @@ export interface CriarPedidoRequest {
 	observacoes: string;
 	total: number;
 	dataCadastro: Date;
+}
+export interface ChangeStatusPedidoRequest{
+	statusPedido: StatusPedido;
+	guid: string;
 }
 export interface BuscarPedidoFiltroRequest extends BaseFilter {
 	statusPedido?: StatusPedido;

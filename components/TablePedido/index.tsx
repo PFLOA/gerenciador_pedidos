@@ -9,7 +9,8 @@ import { formatDatePedido } from '../../utils/formatDate';
 import React, { useMemo } from 'react';
 import Link from 'next/link';
 import { GrStatusGoodSmall } from 'react-icons/gr';
-import { removerPedido } from '../../service/pedido.service';
+import { changeStatusPedido, removerPedido } from '../../service/pedido.service';
+import { Dropdown } from 'react-bootstrap';
 
 interface TablePedidoProps {
 	data: BuscarPedidoFiltroResponse;
@@ -38,6 +39,14 @@ const Linhas = (item: PedidoModel, index: number) => {
 		} catch (error) {}
 	};
 
+	const changeStatus = (guid: string, status: StatusPedido) => {
+		try {
+			changeStatusPedido({guid: guid, statusPedido: status}).then((result)=>{
+
+			})
+		} catch (error) {}
+	};
+
 	return (
 		<Tr index={index} key={index}>
 			<Td tooltip={true} titleTooltip={item.observacoes}>
@@ -48,22 +57,33 @@ const Linhas = (item: PedidoModel, index: number) => {
 			</Td>
 			<Td>{formatDatePedido(item.dataCadastro)}</Td>
 			<Td>
-				<Link
-					href={{
-						pathname: `pedido/detalhes/${guid}`,
-					}}
-				>
-					<a className={styles.link}>Detalhes</a>
-				</Link>
-				<Link
-					href={{
-						pathname: `/pedido`,
-					}}
-				>
-					<a className={`ms-5 ${styles.link_remover}`} onClick={() => removePedido(item.guid)}>
-						Remover
-					</a>
-				</Link>
+				<div className="d-flex align-items-center">
+					<Link
+						href={{
+							pathname: `pedido/detalhes/${guid}`,
+						}}
+					>
+						<a className={styles.link}>Detalhes</a>
+					</Link>
+					<Link
+						href={{
+							pathname: `/pedido`,
+						}}
+					>
+						<a className={`ms-4 ${styles.link_remover}`} onClick={() => removePedido(item.guid)}>
+							Remover
+						</a>
+					</Link>
+					<Dropdown className="d-inline mx-2">
+						<Dropdown.Toggle id="dropdown-autoclose-true" style={{ background: 'transparent', color: 'green', border: '0', fontSize: '14px', textDecoration: 'underline' }}>
+							Status
+						</Dropdown.Toggle>
+						<Dropdown.Menu>
+							<Dropdown.Item href="#" onClick={() => changeStatus(item.guid, StatusPedido.ENTREGUE)}>Entregue</Dropdown.Item>
+							<Dropdown.Item href="#" onClick={() => changeStatus(item.guid, StatusPedido.CANCELAR)}>Cancelar</Dropdown.Item>
+						</Dropdown.Menu>
+					</Dropdown>
+				</div>
 			</Td>
 		</Tr>
 	);
@@ -79,7 +99,7 @@ const TablePedido: React.FC<TablePedidoProps> = ({ data }) => {
 						Status Pedido
 					</Th>
 					<Th width={200}>Data Cadastro</Th>
-					<Th width={50}></Th>
+					<Th width={200}></Th>
 				</tr>
 			</thead>
 			<tbody>{data.data.map(Linhas)}</tbody>
