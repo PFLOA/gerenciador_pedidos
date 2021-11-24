@@ -9,7 +9,9 @@
 	background-color: #fff;
 	margin-right: 0.5rem;
 	width: 30em;
-	height: 9rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	border-radius: 0 10px 10px 0;
 	-webkit-box-shadow: 7px 8px 7px -6px #666666;
 	box-shadow: 7px 8px 7px -6px #666666;
@@ -29,7 +31,9 @@
 		}
 	}
 	.card_footer {
-		padding: 10px;
+		padding: 5px;
+		align-self: flex-end;
+		margin-right: 20px;
 		p {
 			color: rgb(27, 25, 25);
 		}

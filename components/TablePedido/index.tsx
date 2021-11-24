@@ -55,7 +55,7 @@ const TablePedido: React.FC<TablePedidoProps> = ({ data }) => {
 		<table className={styles.table}>
 			<thead>
 				<tr>
-					<Th width={700}>Nome Cliente</Th>
+					<Th width={1000}>Nome Cliente</Th>
 					<Th align={'center'} width={50}>Status Pedido</Th>
 					<Th width={200}>Data Cadastro</Th>
 					<Th width={250}></Th>

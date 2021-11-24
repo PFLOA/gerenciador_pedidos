@@ -1,37 +1,82 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import Card from '../../components/Card';
 import Layout from '../../components/Layout';
+import Loader from '../../components/Loader';
 import { BuscarItemMaisVendidoResponse } from '../../service/models/pedido/pedido.model';
 import { BuscarItemMaisVendido } from '../../service/pedido.service';
+import { formatMoney } from '../../utils/utilsMoney';
 
 const Dashboard = () => {
 	const [itemMaisVendido, setItemMaisVendido] = useState<BuscarItemMaisVendidoResponse>();
+	const [isLoading, setIsLoading] = useState(true);
+	const [isLoadingCard, setIsLoadingCard] = useState(false);
+	const itemMaisVendidoRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		BuscarItemMaisVendido({params : { ano: 2017, mes: 5}}).then((item) => {
-			setItemMaisVendido(item);
-		}).catch((error) => {
+		const date = new Date();
 
-		});
-	}, [])
+		BuscarItemMaisVendido({ params: { ano: date.getFullYear(), mes: date.getMonth() } })
+			.then((item) => {
+				setItemMaisVendido(item);
+				setIsLoading(false);
+			})
+			.catch((error) => {
+				setIsLoading(false);
+			});
 
-	const titulo = useMemo(() => {
-		return '';
-	}, [])
+			const item = itemMaisVendidoRef?.current;
+		item?.setAttribute('value', `${date.getFullYear()}-${date.getMonth()}`);
+	}, []);
 
-	const body = useMemo(() => {
-		return itemMaisVendido?.nomeProduto ? itemMaisVendido.nomeProduto : '';
-	}, [itemMaisVendido?.nomeProduto])
+	const handleCardItemMaisVendido = (e: any) => {
+		const arr = e.target.value.split('-');
+
+		setIsLoadingCard(true);
+		BuscarItemMaisVendido({ params: { ano: arr[0], mes: arr[1] } })
+			.then((item) => {
+				setItemMaisVendido(item);
+				setIsLoadingCard(false);
+			})
+			.catch((error) => {
+				setIsLoadingCard(false);
+			});
+	};
 
 	const footer = useMemo(() => {
-		return '07/2017';
-	}, [])
+		return (
+			<div>
+				<input className="form-control" type="month" ref={itemMaisVendidoRef} onChange={handleCardItemMaisVendido} />
+			</div>
+		);
+	}, []);
+
+	const total = useMemo(() => {
+		return itemMaisVendido?.total ? formatMoney(itemMaisVendido?.total) : formatMoney(0);
+	}, [itemMaisVendido?.total]);
 
 	return (
 		<Layout active="dashboard">
 			<div className="d-flex flex-wrap">
-				<Card titulo={'Item mais vendido'} body={body} footer={footer}/>
+				{!isLoading ? (
+					<Card titulo={'Item mais vendido mês'} footer={footer}>
+						<div className="d-flex flex-column">
+							{!isLoadingCard ? (
+								<>
+									<div className="mb-1" style={{ fontStyle: 'italic' }}>
+										{itemMaisVendido?.nomeProduto}
+									</div>
+									<div className="mb-1">Qtd:. {itemMaisVendido?.quantidadeVendidaMes}</div>
+									<div>Total:. {total}</div>
+								</>
+							) : (
+								<Loader />
+							)}
+						</div>
+					</Card>
+				) : (
+					<Loader />
+				)}
 			</div>
 		</Layout>
 	);
