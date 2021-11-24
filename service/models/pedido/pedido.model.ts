@@ -32,6 +32,18 @@ export interface BuscarPedidoFiltroRequest extends BaseFilter {
 	nf?: string;
 	dataCadastro?: Date;
 }
+export interface BuscarItemMaisVendidoRequest {
+	mes: number;
+	ano: number;
+}
+export interface BuscarItemMaisVendidoResponse {
+	total: number;
+	quantidadeVendidaMes: number;
+	mediaPreco: number;
+	precoAtualProduto: number;
+	maiorValorVendidoMes: number;
+	nomeProduto: string;
+}
 export interface BuscarPedidoPorGuid {
 	nf: string;
 	observacoes: string;
