@@ -1,4 +1,13 @@
+@import '../../styles/importer';
+
 .table {
-    max-height: 400px;
-    overflow-y: auto;
+	max-height: 400px;
+	overflow-y: auto;
+}
+.link {
+	text-decoration: underline;
+}
+.link_remover {
+	text-decoration: underline;
+	color: $corError;
 }

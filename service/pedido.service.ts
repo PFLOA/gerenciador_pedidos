@@ -1,5 +1,5 @@
 import EndPoints from "./endpoints/endpoints";
-import { BuscarPorFiltro, BuscarPorGuid, Criar } from "./infra/core/service";
+import { BuscarPorFiltro, BuscarPorGuid, Criar, Remover } from "./infra/core/service";
 import { ToQueryParams } from "./models/core/core.model";
 import { BuscarItemMaisVendidoRequest, BuscarItemMaisVendidoResponse, BuscarPedidoFiltroRequest, BuscarPedidoFiltroResponse, BuscarPedidoPorGuid, BuscarStatusPedidosRequest, BuscarStatusPedidosResponse, CriarPedidoRequest, PedidoModel } from "./models/pedido/pedido.model";
 
@@ -17,4 +17,7 @@ export const BuscarStatusPedidos = async (filtro: ToQueryParams<BuscarStatusPedi
 };
 export const criarPedido = async (body: CriarPedidoRequest): Promise<PedidoModel> => {
 	return await Criar(EndPoints.Pedido, body);
+};
+export const removerPedido = async (guid: string): Promise<PedidoModel> => {
+	return await Remover(EndPoints.Pedido, guid);
 };
