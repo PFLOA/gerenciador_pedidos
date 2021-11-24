@@ -18,6 +18,7 @@ import Td from '../../../components/Table/Td';
 import { formatMoney } from '../../../utils/utilsMoney';
 import { ItemPedidoModelPedidoResponse } from '../../../service/models/itemPedido/item-pedido.model';
 import Link from 'next/link';
+import formatDate, { formatDatePedido } from '../../../utils/formatDate';
 
 interface LinhasProp {
 	item: ItemPedidoModelPedidoResponse;
@@ -99,7 +100,7 @@ const DetalhesPedido: React.FC = () => {
 			<Layout active={'pedido'}>
 				<div>
 					<div className={`mb-4 py-2 mx-2 ${styles.titulo}`}>
-						<h2>Detalhes Pedido</h2>
+						<h2>Detalhes Pedido {formatDatePedido(pedido?.dataCadastro)}</h2>
 					</div>
 					{!isLoading && pedido ? (
 						<>

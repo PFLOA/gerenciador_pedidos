@@ -36,6 +36,14 @@ export interface BuscarItemMaisVendidoRequest {
 	mes: number;
 	ano: number;
 }
+export interface BuscarStatusPedidosRequest {
+	mes: number;
+	ano: number;
+	statusPedido: StatusPedido;
+}
+export interface BuscarStatusPedidosResponse {
+	total: number;
+}
 export interface BuscarItemMaisVendidoResponse {
 	total: number;
 	quantidadeVendidaMes: number;
@@ -47,6 +55,7 @@ export interface BuscarItemMaisVendidoResponse {
 export interface BuscarPedidoPorGuid {
 	nf: string;
 	observacoes: string;
+	dataCadastro: Date;
 	total: number;
 	statusPedido: StatusPedido;
 	clienteResponse: ClienteModel
