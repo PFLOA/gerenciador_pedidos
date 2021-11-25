@@ -28,6 +28,7 @@ const DropdownCliente: React.FC<DropdownClienteProp> = ({ listaCliente, isLoadin
 			total: pedido.total,
 			itenPedido: pedido.itenPedido,
 			dataCadastro: pedido.dataCadastro,
+			porcentagemComissao: pedido.porcentagemComissao
 		});
 	};
 
