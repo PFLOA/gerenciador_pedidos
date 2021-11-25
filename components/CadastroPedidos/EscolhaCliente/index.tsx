@@ -70,6 +70,9 @@ const EscolhaCliente: React.FC<EscolhaClienteProps> = () => {
 					<div className="col-2">
 						<Input type="date" name="dataCadastro" label="Data Cadastro" onChange={handleChange} />
 					</div>
+					<div className="col-2">
+						<Input type="number" name="porcentagemComissao" label="Comissão (%)" onChange={handleChange} />
+					</div>
 				</div>
 				<div className="row">
 					<div className="col-6">

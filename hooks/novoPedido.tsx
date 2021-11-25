@@ -28,7 +28,8 @@ export const PedidoProvider: React.FC = ({ children }) => {
 		statusPedido: 0,
 		total: 0,
 		itenPedido: [],
-		dataCadastro: new Date()
+		dataCadastro: new Date(),
+		porcentagemComissao: 0
 	});
 
 	const setCliente = useCallback((value: string) => {
@@ -57,6 +58,11 @@ export const PedidoProvider: React.FC = ({ children }) => {
 		var filtered = listagemPedido.filter(function (value) {
 			if (value.idProduto !== id) return value;
 		});
+
+		console.log(filtered);
+		console.log(listagemPedido);
+
+		
 
 		setListagemPedido(filtered);
 	};
@@ -93,12 +99,13 @@ export const PedidoProvider: React.FC = ({ children }) => {
 			
 			setPedidos({
 				clienteGuid: pedido.clienteGuid,
-				itenPedido: listaItensPedido,
+				itenPedido: listagemPedido,
 				nf: pedido.nf,
 				observacoes: pedido.observacoes,
 				statusPedido: pedido.statusPedido,
 				total: total,
-				dataCadastro: pedido.dataCadastro
+				dataCadastro: pedido.dataCadastro,
+				porcentagemComissao: pedido.porcentagemComissao
 			})
 			
 	}, [listagemPedido, listaItensPedido])

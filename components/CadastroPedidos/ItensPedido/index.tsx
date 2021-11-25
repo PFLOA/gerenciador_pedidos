@@ -177,7 +177,7 @@ const ItensPedido: React.FC<ItensPedidoProps> = () => {
 					</div>
 				</div>
 			</form>
-			<div className={styles.listagem_pedidos}>
+			<div className={`mb-5 ${styles.listagem_pedidos}`}>
 				<table className={styles.table}>
 					<thead>
 						<tr>

@@ -14,9 +14,10 @@ interface FormButton {
 
 const Dropdown: React.FC<FormButton> = ({ callback, close, label, nomeItem, children }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
+	const dropdownDiv = useRef<HTMLDivElement>(null);
 
 	const handleDropdown = () => {
-		const optionsContainer = document.querySelector(`.${style.options_container}`);
+		const optionsContainer = dropdownDiv?.current;
 		optionsContainer?.classList.toggle(`${style.active}`);
 	};
 
@@ -30,7 +31,7 @@ const Dropdown: React.FC<FormButton> = ({ callback, close, label, nomeItem, chil
 			<div>
 				<label className="mb-1">{label}</label>
 				<div className={style.select_box}>
-					<div className={`${style.options_container}`}>
+					<div className={`${style.options_container}`} ref={dropdownDiv}>
 						<div className={style.option}>
 							<input
 								autoComplete="off"

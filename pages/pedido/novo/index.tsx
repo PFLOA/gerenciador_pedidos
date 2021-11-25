@@ -18,16 +18,21 @@ const NovoPedido: React.FC = () => {
 	const componentsList = [
 		{
 			id: 1,
-			title: 'Cliente',
-			component: <EscolhaCliente />,
+			title: 'Cadastro',
+			component: (
+				<>
+					<div className="my-5">
+						<EscolhaCliente />
+					</div>
+					<hr></hr>
+					<div className="my-5">
+						<ItensPedido />
+					</div>
+				</>
+			),
 		},
 		{
 			id: 2,
-			title: 'Itens Pedido',
-			component: <ItensPedido />,
-		},
-		{
-			id: 3,
 			title: 'Revisão',
 			component: <RevisaoPedido />,
 		},

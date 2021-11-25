@@ -1,36 +1,36 @@
 @import '../../styles/importer';
 .nav {
-    display: flex;
-    background: $corBgLayout;
+	display: flex;
+	background: $corBgLayout;
 }
 
 .layout {
-    background: $corBgLayout;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    height: 100%;
-    .container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        width: 100%;
-        .card {
-            min-height: 500px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding: 12px;
-            border-radius: 15px;
-            background: $corTexto;
-            width: 95%;
-        }
-        .footer {
-            @include py(5);
-            background-color: $corBgBody;
-            width: 100%;
-        }
-    }
+	background: $corBgLayout;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	height: 100%;
+	.container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		width: 100%;
+		.card {
+			min-height: 600px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			margin-bottom: 20px;
+			padding: 12px;
+			border-radius: 15px;
+			background: $corTexto;
+			width: 95%;
+		}
+		.footer {
+			@include py(5);
+			background-color: $corBgBody;
+			width: 100%;
+		}
+	}
 }

@@ -24,6 +24,7 @@ export interface CriarPedidoRequest {
 	nf: string;
 	observacoes: string;
 	total: number;
+	porcentagemComissao: number;
 	dataCadastro: Date;
 }
 export interface ChangeStatusPedidoRequest{
