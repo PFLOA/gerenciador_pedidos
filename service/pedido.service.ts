@@ -22,5 +22,5 @@ export const removerPedido = async (guid: string): Promise<PedidoModel> => {
 	return await Remover(EndPoints.Pedido, guid);
 };
 export const changeStatusPedido = async (body: ChangeStatusPedidoRequest): Promise<BuscarPedidoPorGuid> => {
-	return await Alterar(EndPoints.Pedido, body);
+	return await Alterar(EndPoints.ChangeStatusPedido, body);
 };

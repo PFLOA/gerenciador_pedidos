@@ -11,6 +11,8 @@ import Link from 'next/link';
 import { GrStatusGoodSmall } from 'react-icons/gr';
 import { changeStatusPedido, removerPedido } from '../../service/pedido.service';
 import { Dropdown } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+import { formatMoney } from '../../utils/utilsMoney';
 
 interface TablePedidoProps {
 	data: BuscarPedidoFiltroResponse;
@@ -19,6 +21,7 @@ interface TablePedidoProps {
 const Linhas = (item: PedidoModel, index: number) => {
 	const { guid } = item;
 	console.log(item);
+	const router = useRouter();
 
 	const statusPedido = useMemo(() => {
 		switch (item?.statusPedido) {
@@ -35,15 +38,15 @@ const Linhas = (item: PedidoModel, index: number) => {
 
 	const removePedido = (guid: string) => {
 		try {
-			removerPedido(guid).then((result) => {});
+			removerPedido(guid).then((result) => {
+				router.reload();
+			});
 		} catch (error) {}
 	};
 
 	const changeStatus = (guid: string, status: StatusPedido) => {
 		try {
-			changeStatusPedido({guid: guid, statusPedido: status}).then((result)=>{
-
-			})
+			changeStatusPedido({ guid: guid, statusPedido: status }).then((result) => {});
 		} catch (error) {}
 	};
 
@@ -54,6 +57,9 @@ const Linhas = (item: PedidoModel, index: number) => {
 			</Td>
 			<Td tooltip={true} titleTooltip={statusPedido?.status} align={'center'}>
 				<GrStatusGoodSmall className={`me-3 ${statusPedido?.color}`} />
+			</Td>
+			<Td>
+				{formatMoney(item.total)}
 			</Td>
 			<Td>{formatDatePedido(item.dataCadastro)}</Td>
 			<Td>
@@ -79,8 +85,12 @@ const Linhas = (item: PedidoModel, index: number) => {
 							Status
 						</Dropdown.Toggle>
 						<Dropdown.Menu>
-							<Dropdown.Item href="#" onClick={() => changeStatus(item.guid, StatusPedido.ENTREGUE)}>Entregue</Dropdown.Item>
-							<Dropdown.Item href="#" onClick={() => changeStatus(item.guid, StatusPedido.CANCELAR)}>Cancelar</Dropdown.Item>
+							<Dropdown.Item href="#" onClick={() => changeStatus(item.guid, StatusPedido.ENTREGUE)}>
+								Entregue
+							</Dropdown.Item>
+							<Dropdown.Item href="#" onClick={() => changeStatus(item.guid, StatusPedido.CANCELAR)}>
+								Cancelar
+							</Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown>
 				</div>
@@ -98,6 +108,7 @@ const TablePedido: React.FC<TablePedidoProps> = ({ data }) => {
 					<Th align={'center'} width={50}>
 						Status Pedido
 					</Th>
+					<Th width={200}>Total</Th>
 					<Th width={200}>Data Cadastro</Th>
 					<Th width={200}></Th>
 				</tr>
