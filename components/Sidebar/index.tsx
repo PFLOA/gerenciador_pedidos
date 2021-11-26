@@ -64,6 +64,13 @@ const Sidebar: React.FC<SidebarProps> = ({ active }) => {
 			to: 'pedido',
 			active: active,
 		},
+		{
+			id: 5,
+			img: <FaAddressBook size={16} />,
+			label: 'Novo Usuario',
+			to: 'usuarios/novo',
+			active: active,
+		},
 	];
 	return (
 		<>

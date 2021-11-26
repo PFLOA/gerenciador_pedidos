@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Dashboard from './dashboard';
 import styles from '../styles/Home.module.scss';
 import LoginWindow from './login';
+import Hooks from '../hooks';
 
 const Home: NextPage = () => {
 	return (

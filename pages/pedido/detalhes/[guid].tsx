@@ -145,6 +145,14 @@ const DetalhesPedido: React.FC = () => {
 									<h6 className="p-0 m-0">{formatMoney(pedido?.total)}</h6>
 								</div>
 							</div>
+							<div className="row align-items-center mx-2 my-2">
+								<div className="col-2">
+									<h5 className="p-0 m-0">Total Comissão:</h5>
+								</div>
+								<div className="col">
+									<h6 className="p-0 m-0">{formatMoney(pedido?.totalComissao)}</h6>
+								</div>
+							</div>
 							<div className="row align-items-center mt-5 mx-2">
 								<table className={styles.table}>
 									<thead>

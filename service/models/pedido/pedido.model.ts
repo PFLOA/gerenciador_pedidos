@@ -63,6 +63,7 @@ export interface BuscarPedidoPorGuid {
 	observacoes: string;
 	dataCadastro: Date;
 	total: number;
+	totalComissao: number;
 	statusPedido: StatusPedido;
 	clienteResponse: ClienteModel
 	itensPedidoResponse: ItemPedidoModelPedidoResponse[];

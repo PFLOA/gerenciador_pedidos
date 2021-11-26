@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import { ItemPedidoModel, ItensPedidoModel } from '../service/models/itemPedido/item-pedido.model';
 import { CriarPedidoRequest } from '../service/models/pedido/pedido.model';
 import { removerMaskMoney, removerMaskMoneyString } from '../utils/utilsMoney';
+import { useToast } from './toast';
 
 type CartContextData = {
 	setCliente(cliente: string): void;
@@ -17,7 +18,6 @@ type CartContextData = {
 const PedidoContext = createContext<CartContextData>({} as CartContextData);
 
 export const PedidoProvider: React.FC = ({ children }) => {
-
 	const [cliente, setClientes] = useState<string>('');
 	const [listagemPedido, setListagemPedidos] = useState<ItemPedidoModel[]>([]);
 	const [listaItensPedido, setListaItensPedido] = useState<ItensPedidoModel[]>([]);
@@ -29,8 +29,9 @@ export const PedidoProvider: React.FC = ({ children }) => {
 		total: 0,
 		itenPedido: [],
 		dataCadastro: new Date(),
-		porcentagemComissao: 0
+		porcentagemComissao: 0,
 	});
+	const { addToast } = useToast();
 
 	const setCliente = useCallback((value: string) => {
 		setClientes(value);
@@ -44,7 +45,6 @@ export const PedidoProvider: React.FC = ({ children }) => {
 		setListagemPedidos(value);
 	}, []);
 
-	
 	const calculateTotal = useCallback(() => {
 		var total = 0;
 		listagemPedido.forEach((item) => {
@@ -59,21 +59,35 @@ export const PedidoProvider: React.FC = ({ children }) => {
 			if (value.idProduto !== id) return value;
 		});
 
-		console.log(filtered);
-		console.log(listagemPedido);
-
-		
-
 		setListagemPedido(filtered);
 	};
 
 	const addItemPedido = useCallback(
 		(item: ItemPedidoModel) => {
 			const found = listagemPedido.find((produto) => produto.idProduto == item.idProduto);
-			if (found) return;
+			
+			if (found) {
+				addToast({
+					title: 'Produto',
+					type: 'info',
+					description: 'Produto já adicionado na lista.',
+				});
+				return;
+			}
 
 			const newList = [...listagemPedido];
 			const newListItensPedido = [...listaItensPedido];
+
+			if (item.quantidade == undefined || item.quantidade == 0) {
+				addToast({
+					title: 'Quantidade',
+					type: 'info',
+					description: 'Quantidade deve ser maior que zero',
+				});
+				return;
+			}
+
+			console.log(item.quantidade);
 
 			newList.push({
 				idProduto: item.idProduto,
@@ -86,7 +100,7 @@ export const PedidoProvider: React.FC = ({ children }) => {
 				idProduto: item.idProduto,
 				quantidade: item.quantidade,
 				preco: item.preco,
-			})
+			});
 
 			setListaItensPedido(newListItensPedido);
 			setListagemPedido(newList);
@@ -95,20 +109,19 @@ export const PedidoProvider: React.FC = ({ children }) => {
 	);
 
 	useEffect(() => {
-			const total = calculateTotal();
-			
-			setPedidos({
-				clienteGuid: pedido.clienteGuid,
-				itenPedido: listagemPedido,
-				nf: pedido.nf,
-				observacoes: pedido.observacoes,
-				statusPedido: pedido.statusPedido,
-				total: total,
-				dataCadastro: pedido.dataCadastro,
-				porcentagemComissao: pedido.porcentagemComissao
-			})
-			
-	}, [listagemPedido, listaItensPedido])
+		const total = calculateTotal();
+
+		setPedidos({
+			clienteGuid: pedido.clienteGuid,
+			itenPedido: listagemPedido,
+			nf: pedido.nf,
+			observacoes: pedido.observacoes,
+			statusPedido: pedido.statusPedido,
+			total: total,
+			dataCadastro: pedido.dataCadastro,
+			porcentagemComissao: pedido.porcentagemComissao,
+		});
+	}, [listagemPedido, listaItensPedido]);
 
 	return <PedidoContext.Provider value={{ setCliente, setListagemPedido, setPedido, addItemPedido, removerItemPedido, listagemPedido, pedido, cliente }}>{children}</PedidoContext.Provider>;
 };

@@ -18,6 +18,7 @@ import { buscarProdutosPorFiltro } from '../../service/produto.service';
 import { PropriedadesFormularios } from '../../utils/propriedadesFormulario';
 import { buscarPedidosPorFiltro } from '../../service/pedido.service';
 import { BuscarPedidoFiltroResponse } from '../../service/models/pedido/pedido.model';
+import { useToast } from '../../hooks/toast';
 
 interface ProdutoProps {
 	produtoListaResult: BuscarPedidoFiltroResponse;
@@ -37,7 +38,8 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 
 	//#endregion
 	//#region [ ref ]
-
+	
+	const { addToast } = useToast();
 	const formRef = useRef<HTMLFormElement>(null);
 
 	//#endregion
@@ -83,6 +85,12 @@ const Pedido: React.FC<ProdutoProps> = ({ produtoListaResult }) => {
 			},
 		}).then((result) => {
 			setPedidoLista(result);
+		}).catch((error) => {
+			addToast({
+          type: 'danger',
+          title: 'Erro na requisição',
+          description: 'Erro ao acessar servidor.',
+        })
 		});
 	}, []);
 

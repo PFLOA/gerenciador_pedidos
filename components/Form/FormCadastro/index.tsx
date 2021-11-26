@@ -4,7 +4,7 @@ import styles from './style.module.scss';
 
 interface FormFilter {
 	onSubmit(e: any): void;
-	formRef: any;
+	formRef?: any;
 }
 const FormCadastro: React.FC<FormFilter> = ({ onSubmit, formRef, children }) => {
 	return (
